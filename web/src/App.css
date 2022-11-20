@@ -10,6 +10,11 @@ body{
   background: var(--color-bg);
 }
 
+a{
+  text-decoration: none;
+  color: unset;
+}
+
 .section__padding {
   padding: 4rem 6rem;
 }
@@ -24,17 +29,50 @@ body{
   /* safari 5.1+,chrome 10+ */
 
   /* opera 11.10+ */
-  background:-o-linear-gradient(0deg, rgba(77, 28, 158, 1) 0%, rgba(125, 68, 219, 1) 100%);
+  background:-o-linear-gradient(0deg, rgba(26, 7, 57, 1) 0%, rgba(75, 37, 137, 1) 100%);
 
   /* ie 6-9 */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4D1C9E', endColorstr='#7D44DB', GradientType=1 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0739', endColorstr='#4B2589', GradientType=1 );
 
   /* ie 10+ */
 
   /* global 94%+ browsers support */
-  background:-o-linear-gradient(bottom, rgba(77, 28, 158, 1) 0%, rgba(125, 68, 219, 1) 100%);
-  background:-webkit-gradient(linear, left bottom, left top, from(rgba(77, 28, 158, 1)), to(rgba(125, 68, 219, 1)));
-  background:linear-gradient(0deg, rgba(77, 28, 158, 1) 0%, rgba(125, 68, 219, 1) 100%);
+  background:-o-linear-gradient(bottom, rgba(26, 7, 57, 1) 0%, rgba(75, 37, 137, 1) 100%);
+  background:-webkit-gradient(linear, left bottom, left top, from(rgba(26, 7, 57, 1)), to(rgba(75, 37, 137, 1)));
+  background:linear-gradient(0deg, rgba(26, 7, 57, 1) 0%, rgba(75, 37, 137, 1) 100%);
+}
+
+.hover-shadow:hover{
+  box-shadow: 1px 1px 6px 1px rgba(255,193,7,0.56);
+-webkit-box-shadow: 1px 1px 6px 1px rgba(255,193,7,0.56);
+-moz-box-shadow: 1px 1px 6px 1px rgba(255,193,7,0.56);
+}
+
+.scale-up-center {
+	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 @media screen and (max-width: 700px) {

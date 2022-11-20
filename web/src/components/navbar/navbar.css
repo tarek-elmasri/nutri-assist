@@ -1,0 +1,219 @@
+.main__navbar{
+  padding: 4rem 6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__navbar-links{
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__navbar-links_logo{
+  margin-right: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__navbar-links_logo img{
+  width: 180px;
+}
+
+.main__navbar-links_container{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__navbar-links_container p,
+.main__navbar-sign p,
+.main__navbar-menu_container-sign p,
+.main__navbar-menu_container-links
+{
+  margin: 0 1rem;
+  color: rgba(255,255,255,.8);
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 14px;
+  cursor: pointer;
+}
+
+.main__navbar-links_container p:hover,
+.main__navbar-sign p:hover,
+.main__navbar-menu_container-sign p:hover,
+.main__navbar-menu_container-links p:hover,
+.main__navbar-menu_container-sign p:hover
+{
+  color: #FFF;
+}
+
+.main__navbar-sign{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__navbar-sign button,
+.main__navbar-menu_container-sign button
+{
+  padding: .8rem 1.5rem;
+  border: none;
+  outline: none;
+  background: var(--color-orange);
+  
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--bg-color);
+  cursor: pointer;
+}
+
+.main__navbar-menu{
+  display: none;
+  position: relative;
+  border-radius: 5px;
+}
+
+.main__navbar-menu svg{
+  cursor: pointer;
+}
+
+.main__navbar-menu_container-sign{
+  display: none;
+}
+
+@media screen and (max-width: 1024px){
+  .main__navbar{
+    padding: 2rem 2rem;
+  }
+}
+
+@media screen and (max-width: 880px){
+  .main__navbar-links_container{
+    display: none;
+  }
+
+  .main__navbar-menu{
+    display: block;
+    margin-left: 1rem;
+  }
+
+  .main__navbar-menu_container{
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background: var(--color-footer);
+
+    padding: 1rem;
+    min-width: 200px;
+  }
+
+  .main__navbar-menu_container-links
+  /* .main__navbar-menu_container-sign */
+  {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+  }
+  
+  /* .main__navbar-menu_container-links
+  .main__navbar-menu_container-sign
+  {
+    margin: 0 1rem;
+  } */
+  
+  .main__navbar-menu_container-links p
+  /* .main__navbar-menu_container-sign p,
+  .main__navbar-menu_container-sign button */
+  {
+    margin: .5rem 0;
+  }
+}
+
+@media screen and (max-width: 550px){
+  .main__navbar-sign{
+    display: none;
+  }
+
+  .main__navbar-menu_container{
+    top: 35px;
+  }
+
+  .main__navbar-menu_container-sign{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+  }
+
+  .main__navbar-menu_container-sign p{
+    margin: 0.5rem 1rem;
+  }
+
+  .main__navbar-menu_container-sign button{
+    margin: .5rem 1rem;
+  }
+}
+
+@media screen and (max-width: 480px){
+  .main__navbar{
+    padding: 1.5rem 1rem;
+  }
+  .main__navbar-links_logo img{
+    width: 150px
+  }
+}
