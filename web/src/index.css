@@ -3,6 +3,7 @@
 :root{
   --font-family: 'Manrope' , 'sans-serif';
 
-  --color-bg: rgba(77, 28, 158, 1);
-  --color-text: rgba(255, 193, 7, 1);
+  --color-bg: rgba(26, 7, 57, 1);
+  --color-orange: rgba(255, 193, 7, 1);
+  --color-footer: rgba(75, 37, 137, 1); 
 }
