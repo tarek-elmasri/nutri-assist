@@ -1,0 +1,58 @@
+*{
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body{
+  background: var(--color-bg);
+}
+
+.section__padding {
+  padding: 4rem 6rem;
+}
+
+.section__margin {
+  margin: 4rem 6rem;
+}
+
+.bg__gradient{
+  /* ff 3.6+ */ 
+
+  /* safari 5.1+,chrome 10+ */
+
+  /* opera 11.10+ */
+  background:-o-linear-gradient(0deg, rgba(77, 28, 158, 1) 0%, rgba(125, 68, 219, 1) 100%);
+
+  /* ie 6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4D1C9E', endColorstr='#7D44DB', GradientType=1 );
+
+  /* ie 10+ */
+
+  /* global 94%+ browsers support */
+  background:-o-linear-gradient(bottom, rgba(77, 28, 158, 1) 0%, rgba(125, 68, 219, 1) 100%);
+  background:-webkit-gradient(linear, left bottom, left top, from(rgba(77, 28, 158, 1)), to(rgba(125, 68, 219, 1)));
+  background:linear-gradient(0deg, rgba(77, 28, 158, 1) 0%, rgba(125, 68, 219, 1) 100%);
+}
+
+@media screen and (max-width: 700px) {
+  .section__padding {
+    padding: 4rem;
+  }
+
+  .section__margin {
+    margin: 4rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .section__padding {
+    padding: 4rem 2rem;
+  }
+
+  .section__margin {
+    margin: 4rem 2rem;
+  }  
+}
