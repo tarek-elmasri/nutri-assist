@@ -4,7 +4,8 @@ import {
   Footer,
   Header,
   Navbar,
-  Testemonials
+  Testemonials,
+  Values
 } from '../../components';
 
 const Main = () => {
@@ -15,6 +16,7 @@ const Main = () => {
         <Header />
       </div>
       <Features />
+      <Values />
       <Testemonials />
       <Footer />
     </div>
