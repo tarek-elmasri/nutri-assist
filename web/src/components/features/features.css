@@ -1,14 +1,14 @@
 
 .main__features-container{
   padding: 3rem 3rem;
-  border-radius: 10px;
 }
 
 .main__features-heading h2{
   font-family: var(--font-family);
-  font-size: 45px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 52px;
+  letter-spacing: -0.04em;
   color: var(--color-orange);
 }
 
@@ -39,7 +39,8 @@
 @media screen and (max-width: 1024px){
   .main__features-heading h2{
     font-size: 28px;
-    line-height: 39px;
+    line-height: 40px;
+    letter-spacing: -0.04em;
     text-align: center
   }
 }
