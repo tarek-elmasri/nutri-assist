@@ -1,4 +1,6 @@
-import React from 'react';
+import fruitsLine from '../../assets/fruits-line.png';
+import { Fruits } from '../../baseUI';
+
 import {
   Features,
   Footer,
@@ -16,6 +18,7 @@ const Main = () => {
         <Header />
       </div>
       <Features />
+      <Fruits />
       <Values />
       <Testemonials />
       <Footer />
