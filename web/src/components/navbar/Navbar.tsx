@@ -2,25 +2,9 @@ import { useState } from 'react';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import './navbar.css';
 import logo from '../../assets/logo.png';
+import MainNavbarMenu from '../../baseUI/MainNavbarMenu';
 
-const Menu = () => (
-  <>
-    <p>
-      <a href="#home">Home</a>
-    </p>
-    <p>
-      <a href="#about">Nutri-assist</a>
-    </p>
-    <p>
-      <a href="#features">Features</a>
-    </p>
-    <p>
-      <a href="#values">Values</a>
-    </p>
-  </>
-);
-
-const Navbar = () => {
+const Navbar: React.FC<{ menu?: JSX.Element }> = ({ menu }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
@@ -30,7 +14,7 @@ const Navbar = () => {
           <img src={logo} alt="logo" />
         </div>
         <div className="main__navbar-links_container">
-          <Menu />
+          {menu || <MainNavbarMenu />}
         </div>
       </div>
 
@@ -60,7 +44,7 @@ const Navbar = () => {
         {toggleMenu && (
           <div className="main__navbar-menu_container scale-up-center">
             <div className="main__navbar-menu_container-links">
-              <Menu />
+              {menu || <MainNavbarMenu />}
             </div>
 
             <div className="main__navbar-menu_container-sign">
