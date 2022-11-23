@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Value } from '../../baseUI';
 import './values.css';
 
@@ -22,18 +23,26 @@ const valuesData = [
 const Values = () => {
   return (
     <div className="main__values section__padding" id="values">
-      <div className="main__values-heading">
+      <motion.div
+        className="main__values-heading"
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5 }}
+      >
         <h1 className="gradient__text">
           Get Rid Of Paperwork & Focus On Patient Needs
         </h1>
-      </div>
+      </motion.div>
       <div className="main__values-container">
         {valuesData.map((value) => (
-          <Value
+          <motion.div
             key={`${value.title}-title`}
-            title={value.title}
-            text={value.text}
-          />
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <Value title={value.title} text={value.text} />
+          </motion.div>
         ))}
       </div>
     </div>

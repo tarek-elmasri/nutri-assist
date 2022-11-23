@@ -1,6 +1,7 @@
+import { motion, AnimatePresence } from 'framer-motion';
 import { Feature } from '../../baseUI';
-import './features.css';
 import { calculatorImg, mealImg, paperworkImg } from './imports';
+import './features.css';
 
 const featuresData = [
   {
@@ -21,6 +22,11 @@ const featuresData = [
 ];
 
 const Features = () => {
+  const animateX = {
+    hidden: { opacity: 0, x: -20 },
+    show: { opacity: 1, x: 0 }
+  };
+
   return (
     <div className="main__features section__padding">
       <div className="main__features-container bg__gradient-light" id="about">
@@ -32,13 +38,20 @@ const Features = () => {
         </div>
 
         <div className="main__features-div">
-          {featuresData.map((feature) => (
-            <Feature
+          {featuresData.map((feature, i) => (
+            <motion.div
               key={`$${feature.title}-title`}
-              title={feature.title}
-              text={feature.text}
-              img={feature.img}
-            />
+              variants={animateX}
+              initial="hidden"
+              whileInView="show"
+              transition={{ delay: 0.5 }}
+            >
+              <Feature
+                title={feature.title}
+                text={feature.text}
+                img={feature.img}
+              />
+            </motion.div>
           ))}
         </div>
       </div>
