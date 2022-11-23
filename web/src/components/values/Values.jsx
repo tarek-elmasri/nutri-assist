@@ -29,7 +29,11 @@ const Values = () => {
       </div>
       <div className="main__values-container">
         {valuesData.map((value) => (
-          <Value title={value.title} text={value.text} />
+          <Value
+            key={`${value.title}-title`}
+            title={value.title}
+            text={value.text}
+          />
         ))}
       </div>
     </div>

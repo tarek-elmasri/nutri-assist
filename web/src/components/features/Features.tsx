@@ -34,6 +34,7 @@ const Features = () => {
         <div className="main__features-div">
           {featuresData.map((feature) => (
             <Feature
+              key={`$${feature.title}-title`}
               title={feature.title}
               text={feature.text}
               img={feature.img}
