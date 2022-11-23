@@ -25,8 +25,10 @@ const Features = () => {
     <div className="main__features section__padding">
       <div className="main__features-container bg__gradient-light" id="about">
         <div className="main__features-heading">
-          <h2>Nutrition Analysis, Meal Planning and</h2>
-          <h2> Practice Managment In One Place.</h2>
+          <h2 className="gradient__text">
+            Nutrition Analysis, Meal Planning and
+          </h2>
+          <h2 className="gradient__text"> Practice Managment In One Place.</h2>
         </div>
 
         <div className="main__features-div">

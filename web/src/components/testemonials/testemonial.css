@@ -19,11 +19,10 @@
 
 .main__testemonials h1{
   font-family: var(--font-family);
-  font-size: 48px;
-  line-height: 45px;
-  font-weight: 800;
+  font-weight: 800 ;
+  font-size: 42px;
+  line-height: 55px;
   letter-spacing: -0.04em;
-  color: var(--color-orange);
 }
 
 .main__testemonials-container{

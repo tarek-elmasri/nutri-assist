@@ -43,7 +43,7 @@ const Testemonials = () => {
   ];
   return (
     <div className="main__testemonials section__padding">
-      <h1>What Our Customers Say</h1>
+      <h1 className="gradient__text">What Our Customers Say</h1>
       <div className="main__testemonials-container">
         <Swiper
           modules={[Autoplay, Pagination, Scrollbar]}
