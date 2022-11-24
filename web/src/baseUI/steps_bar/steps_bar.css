@@ -41,6 +41,6 @@
   margin-right: 0;
 }
 
-.active{
+.steps-bar__step.active{
   background: var(--color-orange);
 }
