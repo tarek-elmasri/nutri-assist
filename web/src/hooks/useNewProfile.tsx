@@ -1,6 +1,6 @@
 import { MouseEventHandler, useEffect, useState } from 'react';
 import { GrFormNextLink, GrFormPreviousLink } from 'react-icons/gr';
-import Slider from '../baseUI/slider/Slider';
+import { Slider } from '../baseUI';
 import { ActivityLevel, Gender } from '../modules/profile';
 
 const useNewProfile = () => {
