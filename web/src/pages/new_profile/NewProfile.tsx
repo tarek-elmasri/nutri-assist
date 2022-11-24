@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Navbar, StepsBar } from '../../components';
+import { Navbar } from '../../components';
 import useNewProfile from '../../hooks/useNewProfile';
+import { StepsBar } from '../../baseUI';
 import './new_profile.css';
 
 const NewProfile = () => {
