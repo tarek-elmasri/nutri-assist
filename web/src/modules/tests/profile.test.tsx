@@ -1,6 +1,6 @@
 import Profile, { ActivityLevel, Gender } from '../profile';
 
-describe('profile module tests', () => {
+fdescribe('profile module tests', () => {
   let profile: Profile;
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('profile module tests', () => {
 
   test('getBMI to be defined and return valid value', () => {
     expect(profile.getBMI).toBeDefined();
-    expect(profile.getBMI()).toBe(26);
+    expect(profile.getBMI()).toBe(25.88);
   });
 
   test('getWeightCategory method defined and returns valid value', () => {

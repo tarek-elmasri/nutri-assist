@@ -1,3 +1,5 @@
+import numbers from '../utils/numbers';
+
 export enum Gender {
   male = 'male',
   female = 'female'
@@ -54,8 +56,8 @@ class Profile {
     let minZone = 0.3 * idealBodyWeight - idealBodyWeight;
     if (minZone < 0) minZone = -1 * minZone;
     return {
-      max: Math.round(maxZone * 100) / 100,
-      min: Math.round(minZone * 100) / 100
+      max: numbers.fixedDecimals(maxZone),
+      min: numbers.fixedDecimals(minZone)
     };
   };
 
@@ -70,15 +72,14 @@ class Profile {
 
     // scenario no.2 -> outside range
     return (
-      Math.round(
-        ((this.weight - idealBodyWeight) * genderFactor + idealBodyWeight) * 100
-      ) / 100
+      numbers.fixedDecimals(this.weight - idealBodyWeight) * genderFactor +
+      idealBodyWeight
     );
   };
 
   getBMI = () =>
-    Math.round(
-      ((this.weight / ((this.height / 100) * (this.height / 100))) * 100) / 100
+    numbers.fixedDecimals(
+      this.weight / ((this.height / 100) * (this.height / 100))
     );
 
   getWeightCategory = (): WeightCategory => {
