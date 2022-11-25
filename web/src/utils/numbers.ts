@@ -1,5 +1,7 @@
 const fixedDecimals = (value: number) => parseFloat(value.toFixed(2));
 
-export default {
+const numbers = {
   fixedDecimals
 };
+
+export default numbers;
