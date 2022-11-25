@@ -68,7 +68,7 @@ class Profile {
 
     // scenario no.1 -> wight in ideal zone
     if (this.weight <= idealZone.max && this.weight >= idealZone.min)
-      return idealBodyWeight;
+      return numbers.fixedDecimals(idealBodyWeight);
 
     // scenario no.2 -> outside range
     return (
