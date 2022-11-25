@@ -1,13 +1,50 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../../components';
-import useNewProfile from '../../hooks/useNewProfile';
 import { StepsBar } from '../../baseUI';
 import './new_profile.css';
+import { PropsWithChildren } from 'react';
+import useNewProfile, { NewProfileForm } from '../../hooks/useNewProfile';
 
 const NewProfile = () => {
-  // const [currentStep, setCurrentStep] = useState(1);
-  // const [form, setForm] = useState({ weight: 78, height: 178 });
-  const { currentStep, frame, frameTiltles } = useNewProfile();
+  const onSubmit = (form: NewProfileForm) => {
+    console.log('should submit');
+    console.log(form);
+  };
+
+  const { currentStep, frame, frameTiltles } = useNewProfile({
+    onSubmit
+  });
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      x: -20
+    },
+    enter: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: 0.5
+      }
+    },
+    exit: {
+      opacity: 0,
+      x: 20
+    }
+  };
+
+  const FrameAnimator: React.FC<PropsWithChildren> = ({ children }) => (
+    <motion.div
+      key={`frame-${currentStep}`}
+      className="new-profile_container_form"
+      variants={variants}
+      initial="hidden"
+      animate="enter"
+      exit="exit"
+    >
+      {children}
+    </motion.div>
+  );
 
   return (
     <div className="new-profile bg__gradient">
@@ -18,17 +55,10 @@ const NewProfile = () => {
         <p>{frameTiltles.subTitle}</p>
       </div>
       <div className="new-profile_container">
-        <StepsBar stepsCount={4} currentStep={currentStep} />
+        <StepsBar stepsCount={5} currentStep={currentStep} />
+
         <AnimatePresence>
-          <motion.div
-            className="new-profile_container_form"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ delay: 0.5 }}
-          >
-            {frame}
-          </motion.div>
+          <FrameAnimator>{frame}</FrameAnimator>
         </AnimatePresence>
       </div>
     </div>

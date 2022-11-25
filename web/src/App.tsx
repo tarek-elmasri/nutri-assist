@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './pages/main/Main';
 import './App.css';
-import NewProfile from './pages/new_profile/NewProfile';
+import NewProfile from './pages/new_profile';
 
 function App() {
   return (
