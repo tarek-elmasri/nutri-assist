@@ -3,9 +3,9 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
-  NonAttribute,
   DataTypes
 } from 'sequelize';
+import bcrypt from 'bcrypt';
 import { sequelize } from '../database/database';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -14,8 +14,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare lastName: string | null;
   declare phoneNo: string;
   declare email: string;
-  declare passwordDigest: CreationOptional<string>;
-  declare password: NonAttribute<string>;
+  declare password: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -44,9 +43,10 @@ User.init(
     },
     email: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
-    passwordDigest: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -64,5 +64,14 @@ User.init(
     sequelize
   }
 );
+
+// hashing password before create
+User.beforeCreate(async (user) => {
+  const hashedPassword = await bcrypt.hash(
+    user.password + process.env.PEPPER,
+    parseInt(process.env.SALT_ROUNDS!)
+  );
+  user.password = hashedPassword;
+});
 
 export default User;

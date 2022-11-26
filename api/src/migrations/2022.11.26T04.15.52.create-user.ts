@@ -24,9 +24,10 @@ export const up: Migration = async ({ context: sequelize }) => {
     },
     email: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
-    passwordDigest: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false
     },
