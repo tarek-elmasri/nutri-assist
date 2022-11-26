@@ -30,7 +30,6 @@
     "jasmine": "^4.5.0",
     "jasmine-spec-reporter": "^7.0.0",
     "prettier": "^2.8.0",
-    "sequelize-cli": "^6.5.2",
     "superset": "^2.0.1",
     "ts-node": "^10.9.1",
     "tsc-watch": "^5.0.3",
@@ -43,6 +42,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.25.8"
+    "sequelize": "^6.25.8",
+    "umzug": "^3.2.1"
   }
 }

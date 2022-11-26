@@ -1,5 +1,6 @@
 import express from 'express';
-import db from './database/database';
+import { sequelize } from './database/database';
+import User from './models/user';
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.listen(PORT, async () => {
   console.log(`server is running on port: ${PORT}`);
   // testing sequalize connection
   try {
-    await db.authenticate();
+    await sequelize.authenticate();
     console.log('database connection is successfull');
   } catch (error) {
     console.log(`error while connecting to database`, error);
