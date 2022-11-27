@@ -3,12 +3,29 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
-  DataTypes
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association,
+  NonAttribute
 } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { sequelize } from '../database/database';
+import Client from './client';
 
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+// interface
+class User extends Model<
+  InferAttributes<User, { omit: 'clients' }>,
+  InferCreationAttributes<User, { omit: 'clients' }>
+> {
   declare id: CreationOptional<string>;
   declare firstName: string;
   declare lastName: string | null;
@@ -17,8 +34,37 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare password: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+
+  // Since TS cannot determine model association at compile time
+  // we have to declare them here purely virtually
+  // these will not exist until `Model.init` was called.
+  declare getClients: HasManyGetAssociationsMixin<Client>; // Note the null assertions!
+  declare addClient: HasManyAddAssociationMixin<Client, string>;
+  declare addClients: HasManyAddAssociationsMixin<Client, string>;
+  declare setClients: HasManySetAssociationsMixin<Client, string>;
+  declare removeClient: HasManyRemoveAssociationMixin<Client, string>;
+  declare removeClients: HasManyRemoveAssociationsMixin<Client, string>;
+  declare hasClient: HasManyHasAssociationMixin<Client, string>;
+  declare hasClients: HasManyHasAssociationsMixin<Client, string>;
+  declare countClients: HasManyCountAssociationsMixin;
+  declare createClient: HasManyCreateAssociationMixin<Client, 'userId'>;
+
+  declare clients?: NonAttribute<Client[]>;
+
+  declare static associations: {
+    clients: Association<User, Client>;
+  };
 }
 
+//relations
+
+User.hasMany(Client, {
+  sourceKey: 'id',
+  foreignKey: 'clientId',
+  as: 'clients'
+});
+
+//schema
 User.init(
   {
     id: {

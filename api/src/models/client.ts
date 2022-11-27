@@ -4,28 +4,65 @@ import {
   InferCreationAttributes,
   CreationOptional,
   DataTypes,
-  ForeignKey
+  ForeignKey,
+  NonAttribute,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association
 } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { sequelize } from '../database/database';
 import User from './user';
+import Profile from './profile';
 
 class Client extends Model<
-  InferAttributes<Client>,
-  InferCreationAttributes<Client>
+  InferAttributes<Client, { omit: 'profiles' }>,
+  InferCreationAttributes<Client, { omit: 'profiles' }>
 > {
   declare id: CreationOptional<string>;
   declare firstName: string;
   declare lastName: string | null;
   declare phoneNo: string;
   declare password: string;
-  declare userId: ForeignKey<string>;
+  declare userId: ForeignKey<User['id']>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+
+  declare getProfiles: HasManyGetAssociationsMixin<Profile>; // Note the null assertions!
+  declare addProfile: HasManyAddAssociationMixin<Profile, string>;
+  declare addProfiles: HasManyAddAssociationsMixin<Profile, string>;
+  declare setProfile: HasManySetAssociationsMixin<Profile, string>;
+  declare removeProfile: HasManyRemoveAssociationMixin<Profile, string>;
+  declare removeProfiles: HasManyRemoveAssociationsMixin<Profile, string>;
+  declare hasProfile: HasManyHasAssociationMixin<Profile, string>;
+  declare hasProfiles: HasManyHasAssociationsMixin<Profile, string>;
+  declare countProfiles: HasManyCountAssociationsMixin;
+  declare createProfile: HasManyCreateAssociationMixin<Profile, 'clientId'>;
+
+  declare user?: NonAttribute<User>;
+  declare profiles?: NonAttribute<Profile[]>;
+
+  declare static associations: {
+    profiles: Association<Client, Profile>;
+  };
 }
 
 // relations
-Client.belongsTo(User);
+Client.belongsTo(User, { targetKey: 'id' });
+
+Client.hasMany(Profile, {
+  sourceKey: 'id',
+  foreignKey: 'clientId',
+  as: 'profiles'
+});
 
 Client.init(
   {
