@@ -4,6 +4,8 @@ import {
   InferCreationAttributes,
   CreationOptional,
   DataTypes,
+  ForeignKey,
+  NonAttribute,
   HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
   HasManyAddAssociationsMixin,
@@ -14,58 +16,55 @@ import {
   HasManyHasAssociationsMixin,
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
-  Association,
-  NonAttribute
+  Association
 } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { sequelize } from '../database/database';
-import Client from './client';
+import User from './user';
+import Profile from './profile';
 
-// interface
-class User extends Model<
-  InferAttributes<User, { omit: 'clients' }>,
-  InferCreationAttributes<User, { omit: 'clients' }>
+class Client extends Model<
+  InferAttributes<Client, { omit: 'profiles' }>,
+  InferCreationAttributes<Client, { omit: 'profiles' }>
 > {
   declare id: CreationOptional<string>;
   declare firstName: string;
   declare lastName: string | null;
   declare phoneNo: string;
-  declare email: string;
   declare password: string;
+  declare userId: ForeignKey<User['id']>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  // Since TS cannot determine model association at compile time
-  // we have to declare them here purely virtually
-  // these will not exist until `Model.init` was called.
-  declare getClients: HasManyGetAssociationsMixin<Client>; // Note the null assertions!
-  declare addClient: HasManyAddAssociationMixin<Client, string>;
-  declare addClients: HasManyAddAssociationsMixin<Client, string>;
-  declare setClients: HasManySetAssociationsMixin<Client, string>;
-  declare removeClient: HasManyRemoveAssociationMixin<Client, string>;
-  declare removeClients: HasManyRemoveAssociationsMixin<Client, string>;
-  declare hasClient: HasManyHasAssociationMixin<Client, string>;
-  declare hasClients: HasManyHasAssociationsMixin<Client, string>;
-  declare countClients: HasManyCountAssociationsMixin;
-  declare createClient: HasManyCreateAssociationMixin<Client, 'userId'>;
+  declare getProfiles: HasManyGetAssociationsMixin<Profile>; // Note the null assertions!
+  declare addProfile: HasManyAddAssociationMixin<Profile, string>;
+  declare addProfiles: HasManyAddAssociationsMixin<Profile, string>;
+  declare setProfile: HasManySetAssociationsMixin<Profile, string>;
+  declare removeProfile: HasManyRemoveAssociationMixin<Profile, string>;
+  declare removeProfiles: HasManyRemoveAssociationsMixin<Profile, string>;
+  declare hasProfile: HasManyHasAssociationMixin<Profile, string>;
+  declare hasProfiles: HasManyHasAssociationsMixin<Profile, string>;
+  declare countProfiles: HasManyCountAssociationsMixin;
+  declare createProfile: HasManyCreateAssociationMixin<Profile, 'clientId'>;
 
-  declare clients?: NonAttribute<Client[]>;
+  declare user?: NonAttribute<User>;
+  declare profiles?: NonAttribute<Profile[]>;
 
   declare static associations: {
-    clients: Association<User, Client>;
+    profiles: Association<Client, Profile>;
   };
 }
 
-//relations
+// relations
+Client.belongsTo(User, { targetKey: 'id' });
 
-User.hasMany(Client, {
+Client.hasMany(Profile, {
   sourceKey: 'id',
   foreignKey: 'clientId',
-  as: 'clients'
+  as: 'profiles'
 });
 
-//schema
-User.init(
+Client.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -79,18 +78,12 @@ User.init(
     },
     lastName: {
       type: DataTypes.STRING(50),
-      allowNull: true,
-      defaultValue: 'hello'
+      allowNull: true
     },
     phoneNo: {
       type: DataTypes.STRING(15),
       allowNull: false,
       unique: true
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false
     },
     password: {
       type: DataTypes.STRING,
@@ -106,18 +99,18 @@ User.init(
     }
   },
   {
-    tableName: 'users',
+    tableName: 'clients',
     sequelize
   }
 );
 
 // hashing password before create
-User.beforeCreate(async (user) => {
+Client.beforeCreate(async (client) => {
   const hashedPassword = await bcrypt.hash(
-    user.password + process.env.PEPPER,
+    client.password + process.env.PEPPER,
     parseInt(process.env.SALT_ROUNDS!)
   );
-  user.password = hashedPassword;
+  client.password = hashedPassword;
 });
 
-export default User;
+export default Client;
