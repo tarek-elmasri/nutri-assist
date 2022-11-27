@@ -6,11 +6,13 @@ import { StepsBar } from '../../baseUI';
 import './new_profile.css';
 import { ProfileState, updateProfile } from '../../redux/features/profileSlice';
 import { GlobalStoreState } from '../../redux/store';
-import WeightBodyFrame from './WeightBodyFrame';
-import GenderFrame from './GenderFrame';
-import AgeFrame from './AgeFrame';
-import ActivityLevelFrame from './ActivityLevelFrame';
-import SummaryFrame from './SummaryFrame';
+import {
+  WeightBodyFrame,
+  GenderFrame,
+  AgeFrame,
+  ActivityLevelFrame,
+  SummaryFrame
+} from '.';
 import { Profile } from '../../modules/profile';
 
 const NewProfile = () => {
