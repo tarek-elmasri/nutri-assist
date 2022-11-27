@@ -1,11 +1,14 @@
 import numbers from '../utils/numbers';
+import { IServe } from './serves';
 
 export interface Profile {
+  id?: string;
   height: number;
   weight: number;
   age: number;
   gender: Gender;
   activityLevel: ActivityLevel;
+  serves: { count: number; type: IServe }[];
 }
 
 export enum Gender {
