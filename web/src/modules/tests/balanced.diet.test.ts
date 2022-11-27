@@ -1,59 +1,56 @@
-import BalancedDiet, { IDiet } from '../balanced.diet';
-import Profile, { ActivityLevel, Gender } from '../profile';
+import diets from '../balanced.diet';
+import { ActivityLevel, Gender, Profile } from '../profile';
 
 describe('BalancedDiet Module tests', () => {
-  const adultProfile = new Profile(
-    175,
-    113,
-    Gender.male,
-    33,
-    ActivityLevel.low
-  );
+  const adultProfile: Profile = {
+    height: 175,
+    weight: 113,
+    gender: Gender.male,
+    age: 33,
+    activityLevel: ActivityLevel.low
+  };
 
-  const kidProfile = new Profile(
-    120,
-    45,
-    Gender.female,
-    9,
-    ActivityLevel.average
-  );
-
-  const adultDiet = new BalancedDiet(adultProfile);
-  const kidDiet = new BalancedDiet(kidProfile);
+  const kidProfile: Profile = {
+    height: 120,
+    weight: 45,
+    gender: Gender.female,
+    age: 9,
+    activityLevel: ActivityLevel.average
+  };
 
   test('getCalorieFacor method return valid calculations', () => {
-    expect(adultDiet.getCalorieFactor).toBeDefined();
-    expect(adultDiet.getCalorieFactor()).toBe(20);
-    expect(kidDiet.getCalorieFactor()).toBe(30);
+    expect(diets.getCaloriesFactor).toBeDefined();
+    expect(diets.getCaloriesFactor(adultProfile)).toBe(20);
+    expect(diets.getCaloriesFactor(kidProfile)).toBe(30);
   });
 
   test('getTotalCalories method returns valid calculations', () => {
-    expect(adultDiet.getTotalCalories).toBeDefined();
-    expect(adultDiet.getTotalCalories()).toEqual(1788.8);
-    expect(kidDiet.getTotalCalories()).toEqual(840);
+    expect(diets.getTotalCalories).toBeDefined();
+    expect(diets.getTotalCalories(adultProfile)).toEqual(1788.8);
+    expect(diets.getTotalCalories(kidProfile)).toEqual(840);
   });
 
   test('getTotalProtein method returns valid calculations', () => {
-    expect(adultDiet.getTotalProtein).toBeDefined();
-    expect(adultDiet.getTotalProtein()).toEqual(89.44);
-    expect(kidDiet.getTotalProtein()).toEqual(42);
+    expect(diets.getTotalProtein).toBeDefined();
+    expect(diets.getTotalProtein(adultProfile)).toEqual(89.44);
+    expect(diets.getTotalProtein(kidProfile)).toEqual(42);
   });
 
   test('getTotalCHO method returns valid calculations', () => {
-    expect(adultDiet.getTotalCHO).toBeDefined();
-    expect(adultDiet.getTotalCHO()).toEqual(268.32);
-    expect(kidDiet.getTotalCHO()).toEqual(126);
+    expect(diets.getTotalCHO).toBeDefined();
+    expect(diets.getTotalCHO(adultProfile)).toEqual(268.32);
+    expect(diets.getTotalCHO(kidProfile)).toEqual(126);
   });
 
   test('getTotalFat method returns valid calculations', () => {
-    expect(adultDiet.getTotalFat).toBeDefined();
-    expect(adultDiet.getTotalFat()).toEqual(39.75);
-    expect(kidDiet.getTotalFat()).toEqual(18.67);
+    expect(diets.getTotalFat).toBeDefined();
+    expect(diets.getTotalFat(adultProfile)).toEqual(39.75);
+    expect(diets.getTotalFat(kidProfile)).toEqual(18.67);
   });
 
   test('maximumSaturatedFat method returns valid calculations', () => {
-    expect(adultDiet.maximumSaturatedFat).toBeDefined();
-    expect(adultDiet.maximumSaturatedFat()).toEqual(19.88);
-    expect(kidDiet.maximumSaturatedFat()).toEqual(9.33);
+    expect(diets.maximumSaturatedFat).toBeDefined();
+    expect(diets.maximumSaturatedFat(adultProfile)).toEqual(19.88);
+    expect(diets.maximumSaturatedFat(kidProfile)).toEqual(9.33);
   });
 });

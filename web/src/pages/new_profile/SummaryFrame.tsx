@@ -1,12 +1,12 @@
-import { NewProfileForm } from '../../hooks/useNewProfile';
-import BalancedDiet from '../../modules/balanced.diet';
-import Profile from '../../modules/profile';
+import { Profile } from '../../modules/profile';
 import ControlButton, { GoBackButton } from './ControlButton';
+import profileHelper from '../../modules/profile';
+import dietHelper from '../../modules/balanced.diet';
 
 type SummaryFrameProps = {
   onNext: () => void;
   onPrev: () => void;
-  form: NewProfileForm;
+  form: Profile;
 };
 
 const SummaryFrame: React.FC<SummaryFrameProps> = ({
@@ -15,8 +15,6 @@ const SummaryFrame: React.FC<SummaryFrameProps> = ({
   onPrev
 }) => {
   const { height, weight, age, gender, activityLevel } = form;
-  const profile = new Profile(height, weight, gender, age, activityLevel);
-  const diet = new BalancedDiet(profile);
 
   return (
     <>
@@ -31,14 +29,17 @@ const SummaryFrame: React.FC<SummaryFrameProps> = ({
           <span>Daily Fat:</span>
         </div>
         <div className="new-profile_container_form_summary-data">
-          <span>{`${profile.getIdealZone().min} - ${
-            profile.getIdealZone().max
+          <span>{`${profileHelper.getIdealZone(height).min} - ${
+            profileHelper.getIdealZone(height).max
           } (Kg)`}</span>
-          <span>{profile.getDesireBodyWeight() + ' (Kg)'}</span>
-          <span>{diet.getTotalCalories() + ' (Kcal)'}</span>
-          <span>{diet.getTotalProtein() + ' (gm)'}</span>
-          <span>{diet.getTotalCHO() + ' (gm)'}</span>
-          <span>{diet.getTotalFat() + ' (gm)'}</span>
+          <span>
+            {profileHelper.getDesireBodyWeight(height, weight, gender) +
+              ' (Kg)'}
+          </span>
+          <span>{dietHelper.getTotalCalories(form) + ' (Kcal)'}</span>
+          <span>{dietHelper.getTotalProtein(form) + ' (gm)'}</span>
+          <span>{dietHelper.getTotalCHO(form) + ' (gm)'}</span>
+          <span>{dietHelper.getTotalFat(form) + ' (gm)'}</span>
         </div>
       </div>
       <ControlButton onClick={onNext}>

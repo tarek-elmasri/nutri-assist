@@ -1,105 +1,128 @@
 import numbers from '../utils/numbers';
-import Profile, { ActivityLevel } from './profile';
+import profileHelper, { ActivityLevel, Profile } from './profile';
 
-export interface IDiet {
-  profile: Profile;
-  getCalorieFactor: () => number;
-  getTotalCalories: () => number;
-  getTotalProtein: () => number;
-  getTotalCHO: () => number;
-  getTotalFat: () => number;
-  maximumSaturatedFat: () => number;
-  maximumUnsaturatedFat: (consumedSaturatedFat: number) => number;
-}
+const getCaloriesFactor = ({ height, weight, activityLevel }: Profile) => {
+  const BMI = profileHelper.getBMI(height, weight);
+  switch (activityLevel) {
+    case ActivityLevel.low:
+      return BMI > 25 ? 20 : BMI > 18.5 ? 30 : 35;
 
-class BalancedDiet implements IDiet {
-  protected customizedCalorieFactor?: number;
-  protected customizedProtienPercentage?: number;
-  protected customizedCHOPercentage?: number;
+    case ActivityLevel.average:
+      return BMI > 25 ? 30 : BMI > 18.5 ? 35 : 40;
 
-  profile: Profile;
-  constructor(profile: Profile) {
-    this.profile = profile;
+    case ActivityLevel.high:
+      return BMI > 25 ? 35 : BMI > 18.5 ? 40 : 45;
+
+    default:
+      return 0;
   }
+};
 
-  setCustomCalorieFactor = (calorieFactor: number): void => {
-    this.customizedCalorieFactor = calorieFactor;
-  };
+const getTotalCalories = (profile: Profile, custumCalorieFactor?: number) => {
+  const calorieFactor = custumCalorieFactor || getCaloriesFactor(profile);
+  return numbers.fixedDecimals(
+    calorieFactor *
+      profileHelper.getDesireBodyWeight(
+        profile.height,
+        profile.weight,
+        profile.gender
+      )
+  );
+};
 
-  getCalorieFactor = (): number => {
-    // return custom factor if been set
-    if (this.customizedCalorieFactor) return this.customizedCalorieFactor;
+const getTotalProtein = (
+  profile: Profile,
+  customProtienPercentage?: number,
+  customizedCalorieFactor?: number
+) => {
+  if (
+    customProtienPercentage &&
+    (customProtienPercentage < 15 || customProtienPercentage > 20)
+  )
+    throw new Error(
+      `Invalid percentage value: ${customProtienPercentage}. Percentage must be in range of 15 to 20.`
+    );
 
-    // else calculate it normally
-    const BMI = this.profile.getBMI();
-    const activityLevel = this.profile.activityLevel;
-    switch (activityLevel) {
-      case ActivityLevel.low:
-        return BMI > 25 ? 20 : BMI > 18.5 ? 30 : 35;
+  const protienPercentage = customProtienPercentage
+    ? customProtienPercentage / 100
+    : 0.2;
 
-      case ActivityLevel.average:
-        return BMI > 25 ? 30 : BMI > 18.5 ? 35 : 40;
+  // healthy adults
+  if (profile.age > 18)
+    return numbers.fixedDecimals(
+      (protienPercentage * getTotalCalories(profile, customizedCalorieFactor)) /
+        4
+    );
 
-      case ActivityLevel.high:
-        return BMI > 25 ? 35 : BMI > 18.5 ? 40 : 45;
+  // kids
+  return numbers.fixedDecimals(
+    1.5 *
+      profileHelper.getDesireBodyWeight(
+        profile.height,
+        profile.weight,
+        profile.gender
+      )
+  );
+};
 
-      default:
-        return 0;
-    }
-  };
+const getTotalCHO = (
+  profile: Profile,
+  customCHOPercentage?: number,
+  customCalorieFactor?: number
+) => {
+  if (
+    customCHOPercentage &&
+    (customCHOPercentage < 40 || customCHOPercentage > 60)
+  )
+    throw new Error(
+      `Invalid percentage value: ${customCHOPercentage}. Percentage must be in range of 40 to 60.`
+    );
 
-  getTotalCalories = (): number => {
-    return this.getCalorieFactor() * this.profile.getDesireBodyWeight();
-  };
+  const percentage = customCHOPercentage ? customCHOPercentage / 100 : 0.6;
 
-  setCustomProteinPercentage = (percentage: number): void => {
-    if (percentage < 15 || percentage > 20)
-      throw new Error(
-        `Invalid percentage value: ${percentage}. Percentage must be in range of 15 to 20.`
-      );
+  return numbers.fixedDecimals(
+    (percentage * getTotalCalories(profile, customCalorieFactor)) / 4
+  );
+};
 
-    this.customizedProtienPercentage = percentage / 100;
-  };
+const getTotalFat = (
+  profile: Profile,
+  customs?: {
+    customCalorieFactor?: number;
+    customCHOPercentage?: number;
+    customProteinPercentage?: number;
+  }
+) => {
+  const totalCal = getTotalCalories(profile, customs?.customCalorieFactor);
+  const totalProtienInKCAL =
+    getTotalProtein(profile, customs?.customProteinPercentage) * 4;
+  const totalCHOinKCAL = getTotalCHO(profile, customs?.customCHOPercentage) * 4;
+  const totalFatinKCAL = totalCal - totalProtienInKCAL - totalCHOinKCAL;
+  return numbers.fixedDecimals(totalFatinKCAL / 9);
+};
 
-  setCustomCHOPercentage = (percentage: number): void => {
-    if (percentage < 40 || percentage > 60)
-      throw new Error(
-        `Invalid percentage value: ${percentage}. Percentage must be in range of 40 to 60.`
-      );
+const maximumSaturatedFat = (profile: Profile, customCalorieFactor?: number) =>
+  numbers.fixedDecimals(
+    (0.1 * getTotalCalories(profile, customCalorieFactor)) / 9
+  );
 
-    this.customizedCHOPercentage = percentage / 100;
-  };
+const maximumUnsaturatedFat = (
+  profile: Profile,
+  consumedSaturatedFat: number,
+  customs?: {
+    customCalorieFactor?: number;
+    customCHOPercentage?: number;
+    customProteinPercentage?: number;
+  }
+) =>
+  numbers.fixedDecimals(getTotalFat(profile, customs) - consumedSaturatedFat);
 
-  getTotalProtein = (): number => {
-    const protienPercentage = this.customizedProtienPercentage || 0.2;
-    // healty adults
-    if (this.profile.age > 18)
-      return numbers.fixedDecimals(
-        (protienPercentage * this.getTotalCalories()) / 4
-      );
-
-    // kids
-    return 1.5 * this.profile.getDesireBodyWeight();
-  };
-
-  getTotalCHO = (): number => {
-    const choPercentage = this.customizedCHOPercentage || 0.6;
-    return numbers.fixedDecimals((choPercentage * this.getTotalCalories()) / 4);
-  };
-
-  getTotalFat = (): number => {
-    const totalCal = this.getTotalCalories();
-    const totalProtienInKCAL = this.getTotalProtein() * 4;
-    const totalCHOinKCAL = this.getTotalCHO() * 4;
-    const totalFatinKCAL = totalCal - totalProtienInKCAL - totalCHOinKCAL;
-    return numbers.fixedDecimals(totalFatinKCAL / 9);
-  };
-
-  maximumSaturatedFat = (): number =>
-    numbers.fixedDecimals((0.1 * this.getTotalCalories()) / 9);
-
-  maximumUnsaturatedFat = (consumedSaturatedFat: number): number =>
-    numbers.fixedDecimals(this.getTotalFat() - consumedSaturatedFat);
-}
-
-export default BalancedDiet;
+export default {
+  getCaloriesFactor,
+  getTotalCalories,
+  getTotalCHO,
+  getTotalFat,
+  getTotalProtein,
+  maximumSaturatedFat,
+  maximumUnsaturatedFat
+};
