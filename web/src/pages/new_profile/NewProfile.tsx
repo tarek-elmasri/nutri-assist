@@ -4,7 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../../components';
 import { StepsBar } from '../../baseUI';
 import './new_profile.css';
-import { ProfileState, updateProfile } from '../../redux/features/profileSlice';
+import {
+  addProfile,
+  ProfileState,
+  updateProfile
+} from '../../redux/features/profileSlice';
 import { GlobalStoreState } from '../../redux/store';
 import {
   WeightBodyFrame,
@@ -14,9 +18,11 @@ import {
   SummaryFrame
 } from '.';
 import { Profile } from '../../modules/profile';
+import { useNavigate } from 'react-router';
 
 const NewProfile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data: profileData } = useSelector<GlobalStoreState, ProfileState>(
     (state) => state.profile
   );
@@ -34,7 +40,8 @@ const NewProfile = () => {
 
     if (currentStep === 5) {
       console.log({ height, weight, age, activityLevel, gender });
-      //onSubmit({ ...form, ...newState });
+      dispatch(addProfile(profileData));
+      navigate('/profiles');
     } else {
       setCurrentStep((prev) => prev + 1);
     }
@@ -99,7 +106,7 @@ const NewProfile = () => {
           <SummaryFrame
             onNext={() => onNext({})}
             onPrev={onPrev}
-            form={{ weight, height, activityLevel, age, gender }}
+            form={profileData}
           />
         );
         setFrameTitles({

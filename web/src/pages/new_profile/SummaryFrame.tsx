@@ -14,7 +14,7 @@ const SummaryFrame: React.FC<SummaryFrameProps> = ({
   onNext,
   onPrev
 }) => {
-  const { height, weight, age, gender, activityLevel } = form;
+  const { height, weight, gender } = form;
 
   return (
     <>
