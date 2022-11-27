@@ -2,13 +2,14 @@ import { Request, Response } from 'express';
 import User from '../../models/user';
 import { jwtSign } from '../../utils/jwtHelper';
 
+// register user
 const create = async (req: Request, res: Response) => {
   try {
     const user = await User.create(req.body.user);
     const payload = { user_id: user.id };
     const refreshToken = jwtSign(payload, '7d');
     const accessToken = jwtSign(payload, '2h');
-    res.json({
+    res.status(201).json({
       user: {
         id: user.id,
         firstName: user.firstName,
