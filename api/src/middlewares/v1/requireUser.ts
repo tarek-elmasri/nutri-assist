@@ -13,13 +13,14 @@ const requireUser = async (req: Request, res: Response, next: NextFunction) => {
     const payload = jwtVerify(token);
     if (!payload) throw new Error();
 
-    const user = await User.findOne({ where: { id: payload.userId } });
+    const user = await User.findOne({ where: { id: payload.user_id } });
     if (!user) throw new Error();
     req.user = user;
 
     next();
   } catch (error) {
-    res.status(401);
+    console.log(error);
+    res.status(401).json({ msg: 'Unauthorized' });
   }
 };
 

@@ -17,7 +17,7 @@ const clientExists = async (
 
     next();
   } catch (error) {
-    res.status(404);
+    res.status(404).json({ error });
   }
 };
 

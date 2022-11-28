@@ -28,7 +28,9 @@ const create = async (req: Request, res: Response) => {
   try {
     const clientParams = req.body.client;
     const user = req.user!;
-    const client = await user.createClient(clientParams);
+    const client = await user.createClient({
+      ...clientParams
+    });
     res.status(201).json({
       id: client.id,
       firstName: client.firstName,
