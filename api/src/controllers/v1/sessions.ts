@@ -8,7 +8,10 @@ const create = async (req: Request, res: Response) => {
   try {
     const { phoneNo, password } = req.body;
 
-    const user = await User.findOne({ where: { phoneNo } });
+    const user = await User.findOne({
+      where: { phoneNo },
+      attributes: { exclude: ['password'] }
+    });
 
     if (!user) {
       res.status(404).json({ msg: 'not found' });

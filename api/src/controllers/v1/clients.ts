@@ -6,13 +6,18 @@ const index = async (req: Request, res: Response) => {
     const user = req.user!;
     const clients = await Client.findAll({
       where: { userId: user.id },
+      attributes: {
+        exclude: ['password']
+      },
       include: {
         model: Profile,
         as: 'profiles',
+        required: true,
         include: [
           {
             model: Serve,
-            as: 'serves'
+            as: 'serves',
+            required: true
           }
         ]
       }

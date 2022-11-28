@@ -9,7 +9,8 @@ const index = async (req: Request, res: Response) => {
       where: { clientId },
       include: {
         model: Serve,
-        as: 'serves'
+        as: 'serves',
+        required: true
       }
     });
 
