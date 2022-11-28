@@ -11,7 +11,9 @@ const clientExists = async (
     if (!clientId) throw new Error();
 
     const user = req.user!;
-    const client = Client.findOne({ where: { id: clientId, userId: user.id } });
+    const client = await Client.findOne({
+      where: { id: clientId, userId: user.id }
+    });
 
     if (!client) throw new Error();
 
