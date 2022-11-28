@@ -9,8 +9,7 @@ const create = async (req: Request, res: Response) => {
     const { phoneNo, password } = req.body;
 
     const user = await User.findOne({
-      where: { phoneNo },
-      attributes: { exclude: ['password'] }
+      where: { phoneNo }
     });
 
     if (!user) {

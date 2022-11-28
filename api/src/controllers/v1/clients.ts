@@ -12,12 +12,10 @@ const index = async (req: Request, res: Response) => {
       include: {
         model: Profile,
         as: 'profiles',
-        required: true,
         include: [
           {
             model: Serve,
-            as: 'serves',
-            required: true
+            as: 'serves'
           }
         ]
       }
