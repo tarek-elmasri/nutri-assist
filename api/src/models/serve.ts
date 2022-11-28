@@ -24,9 +24,6 @@ class Serve extends Model<
   declare profile?: NonAttribute<Profile>;
 }
 
-// relations
-Serve.belongsTo(Profile, { targetKey: 'id' });
-
 Serve.init(
   {
     id: {
@@ -53,9 +50,11 @@ Serve.init(
     }
   },
   {
-    tableName: 'profiles',
+    tableName: 'serves',
     sequelize
   }
 );
+
+// relations
 
 export default Serve;

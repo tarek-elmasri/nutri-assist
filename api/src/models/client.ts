@@ -55,15 +55,6 @@ class Client extends Model<
   };
 }
 
-// relations
-Client.belongsTo(User, { targetKey: 'id' });
-
-Client.hasMany(Profile, {
-  sourceKey: 'id',
-  foreignKey: 'clientId',
-  as: 'profiles'
-});
-
 Client.init(
   {
     id: {
@@ -112,5 +103,7 @@ Client.beforeCreate(async (client) => {
   );
   client.password = hashedPassword;
 });
+
+// relations
 
 export default Client;

@@ -55,14 +55,6 @@ class Profile extends Model<
   };
 }
 
-// relations
-Profile.belongsTo(Client, { targetKey: 'id' });
-Profile.hasMany(Serve, {
-  sourceKey: 'id',
-  foreignKey: 'profileId',
-  as: 'serves'
-});
-
 Profile.init(
   {
     id: {
@@ -104,5 +96,7 @@ Profile.init(
     sequelize
   }
 );
+
+// relations
 
 export default Profile;

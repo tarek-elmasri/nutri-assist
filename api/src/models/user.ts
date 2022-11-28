@@ -56,14 +56,6 @@ class User extends Model<
   };
 }
 
-//relations
-
-User.hasMany(Client, {
-  sourceKey: 'id',
-  foreignKey: 'clientId',
-  as: 'clients'
-});
-
 //schema
 User.init(
   {
@@ -119,5 +111,7 @@ User.beforeCreate(async (user) => {
   );
   user.password = hashedPassword;
 });
+
+//relations
 
 export default User;
