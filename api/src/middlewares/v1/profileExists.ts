@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import Profile from '../../models/profile';
+import { Profile } from '../../models';
 
 const profileExists = async (
   req: Request,

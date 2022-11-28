@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import Client from '../../models/client';
-import Profile from '../../models/profile';
-import Serve from '../../models/serve';
+import { Client, Profile, Serve } from '../../models';
 
 const index = async (req: Request, res: Response) => {
   try {

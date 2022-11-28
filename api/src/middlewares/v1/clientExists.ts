@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import Client from '../../models/client';
+import { Client } from '../../models';
 
 const clientExists = async (
   req: Request,

@@ -1,6 +1,7 @@
 import express from 'express';
 import sessions from 'express-session';
 import { sequelize } from './database/database';
+import { User } from './models';
 import routes from './routes/v1/index';
 
 const app = express();
@@ -19,6 +20,20 @@ app.use(
 
 app.use('/api', routes);
 const PORT = process.env.PORT || 5050;
+
+declare module 'express-session' {
+  export interface SessionData {
+    user_id: string | undefined;
+  }
+}
+
+declare global {
+  namespace Express {
+    export interface Request {
+      user?: User;
+    }
+  }
+}
 
 app.listen(PORT, async () => {
   console.log(`server is running on port: ${PORT}`);

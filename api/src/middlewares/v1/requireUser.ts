@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import User from '../../models/user';
+import { User } from '../../models';
 import { jwtVerify } from '../../utils/jwtHelper';
 
 const requireUser = async (req: Request, res: Response, next: NextFunction) => {

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Serve from '../../models/serve';
+import { Serve } from '../../models';
 
 const index = async (req: Request, res: Response) => {
   try {

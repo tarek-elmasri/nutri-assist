@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import Profile from '../../models/profile';
-import Serve from '../../models/serve';
+import { Profile, Serve } from '../../models';
 
 const index = async (req: Request, res: Response) => {
   try {

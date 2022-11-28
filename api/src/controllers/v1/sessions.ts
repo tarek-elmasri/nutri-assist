@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import User from '../../models/user';
+import { User } from '../../models';
 import { jwtSign, jwtVerify } from '../../utils/jwtHelper';
 
 // Login controller
@@ -9,8 +9,9 @@ const create = async (req: Request, res: Response) => {
     const { phoneNo, password } = req.body;
 
     const user = await User.findOne({ where: { phoneNo } });
+
     if (!user) {
-      res.status(404);
+      res.status(404).json({ msg: 'not found' });
       return;
     }
 
@@ -20,7 +21,7 @@ const create = async (req: Request, res: Response) => {
       user.password
     );
     if (!authenticated) {
-      res.status(404);
+      res.status(404).json({ msg: 'not found' });
       return;
     }
 
@@ -41,6 +42,7 @@ const create = async (req: Request, res: Response) => {
       tokens: { refreshToken, accessToken }
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error });
   }
 };
@@ -60,7 +62,7 @@ const update = async (req: Request, res: Response) => {
     // refresh with refresh token if available
     const payload = jwtVerify(req.body.refreshToken);
     if (!payload) {
-      res.status(404);
+      res.status(404).json({ msg: 'not found' });
       return;
     }
     user_id = payload.user_id;
@@ -73,7 +75,7 @@ const update = async (req: Request, res: Response) => {
 // removing user_id from session
 const destroy = (req: Request, res: Response) => {
   req.session.user_id = undefined;
-  res.status(200);
+  res.status(200).json({ msg: 'ok' });
 };
 
 export default {
