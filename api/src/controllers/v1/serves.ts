@@ -16,10 +16,12 @@ const index = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const profileId = req.params.profileId;
-    const serveParams = req.body.serve;
-
-    const serve = await Serve.create({ profileId, ...serveParams });
-    res.status(201).json(serve);
+    const servesParams = req.body.serves as Serve[];
+    await Serve.bulkCreate(
+      servesParams.map((serve) => ({ ...serve, profileId }))
+    );
+    const serves = await Serve.findAll({ where: { profileId } });
+    res.status(201).json(serves);
   } catch (error) {
     res.status(500).json({ error });
   }
