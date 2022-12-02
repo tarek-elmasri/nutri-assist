@@ -5,6 +5,7 @@ import {
   fetchUserQuery,
   getAccessTokenQuery
 } from './endpoints/auth';
+import { createUserMutation } from './endpoints/users';
 
 const serverApi = createApi({
   reducerPath: 'serverApi',
@@ -20,14 +21,16 @@ const serverApi = createApi({
   endpoints: (builder) => ({
     authenticate: authMutation(builder),
     fetchUser: fetchUserQuery(builder),
-    getAccessToken: getAccessTokenQuery(builder)
+    getAccessToken: getAccessTokenQuery(builder),
+    createUser: createUserMutation(builder)
   })
 });
 
 export const {
   useAuthenticateMutation,
   useFetchUserQuery,
-  useGetAccessTokenMutation
+  useGetAccessTokenMutation,
+  useCreateUserMutation
 } = serverApi;
 
 export default serverApi;

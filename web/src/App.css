@@ -80,7 +80,8 @@ a{
   -webkit-text-fill-color: transparent;
 }
 
-.hover-shadow:hover{
+.hover-shadow:hover,
+.hover-shadow:focus{
   box-shadow: 1px 1px 6px 1px rgba(255,193,7,0.56);
 -webkit-box-shadow: 1px 1px 6px 1px rgba(255,193,7,0.56);
 -moz-box-shadow: 1px 1px 6px 1px rgba(255,193,7,0.56);
