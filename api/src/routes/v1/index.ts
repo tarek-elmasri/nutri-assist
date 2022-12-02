@@ -13,6 +13,7 @@ import requireUser from '../../middlewares/v1/requireUser';
 const router = express.Router();
 
 // sessions routes
+router.get('/auth', [requireUser], sessionsController.index);
 router.post('/auth', sessionsController.create);
 router.patch('/auth', sessionsController.update);
 router.delete('/auth', sessionsController.destroy);
