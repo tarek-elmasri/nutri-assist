@@ -3,6 +3,19 @@ import bcrypt from 'bcrypt';
 import { User } from '../../models';
 import { jwtSign, jwtVerify } from '../../utils/jwtHelper';
 
+// gets User by access token
+const index = async (req: Request, res: Response) => {
+  const { id, firstName, lastName, email, phoneNo } = req.user!;
+
+  res.json({
+    id,
+    firstName,
+    lastName,
+    email,
+    phoneNo
+  });
+};
+
 // Login controller
 const create = async (req: Request, res: Response) => {
   try {
@@ -81,6 +94,7 @@ const destroy = (req: Request, res: Response) => {
 };
 
 export default {
+  index,
   create,
   update,
   destroy
