@@ -1,13 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { User } from '../../redux/features/userSlice';
 import * as yup from 'yup';
-import { useCreateUserMutation } from '../../redux/services/serverApi';
-import logo from '../../assets/logo.png';
-import './login.css';
-import Loader from '../../components/Loader/Loader';
+import { useSelector, useDispatch } from 'react-redux';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import * as ls from 'local-storage';
+import { Navigate, useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import { GlobalStoreState } from '../../redux/store';
+import { useCreateUserMutation } from '../../redux/services/serverApi';
+import {
+  setToken,
+  setUser,
+  User,
+  UserState
+} from '../../redux/features/userSlice';
+import Loader from '../../components/Loader/Loader';
+import logo from '../../assets/logo.png';
+import './signup.css';
 
 const schema = yup.object({
   firstName: yup.string().required('Required Field'),
@@ -26,7 +36,16 @@ type CreateUserServerError = Partial<
 >;
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
+  const [searchParams] = useSearchParams();
+  const returnUrl = `/${searchParams.get('returnUrl') || ''}`;
+  const { user: currentUser } = useSelector<GlobalStoreState, UserState>(
+    (state) => state.user
+  );
   const [isServerError, setIsServerError] = useState(false);
+
+  // react-hook-form manages form states
   const {
     register,
     handleSubmit,
@@ -36,16 +55,18 @@ const Signup = () => {
     resolver: yupResolver(schema)
   });
 
+  // sign up redux mutation to server
   const [submit, { data, isLoading, error: submitError }] =
     useCreateUserMutation();
 
+  // handle server error responses
   useEffect(() => {
     if (submitError) {
       if ((submitError as FetchBaseQueryError).status === 422) {
         const errorData = (submitError as FetchBaseQueryError)
           .data as CreateUserServerError;
 
-        (Object.keys(errorData) as (keyof CreateUserServerError)[]).map(
+        (Object.keys(errorData) as (keyof CreateUserServerError)[]).forEach(
           (key) => {
             if (errorData[key]) {
               setError(key, { message: errorData[key]![0] });
@@ -57,8 +78,23 @@ const Signup = () => {
         console.log(submitError);
       }
     }
-  }, [submitError]);
+  }, [submitError, setError]);
 
+  // handle success sign up
+  useEffect(() => {
+    if (data) {
+      const { user, tokens } = data as {
+        user: User;
+        tokens: { accessToken: string; refreshToken: string };
+      };
+      ls.set('refreshToken', tokens.refreshToken);
+      dispatch(setToken(tokens.accessToken));
+      dispatch(setUser(user));
+      navigator(returnUrl);
+    }
+  }, [data, dispatch]);
+
+  if (currentUser) return <Navigate to={returnUrl} />;
   return (
     <div className="login bg__gradient">
       {isLoading && (
@@ -69,7 +105,9 @@ const Signup = () => {
           <img src={logo} alt="logo" />
           <p>Create account and start building your client profiles </p>
           {isServerError && (
-            <p>Something Went Wrong! please try again later.</p>
+            <p style={{ color: 'indianred' }}>
+              Something Went Wrong! please try again later.
+            </p>
           )}
         </div>
         <div className="login__box_form">
