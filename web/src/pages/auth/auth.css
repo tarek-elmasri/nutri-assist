@@ -1,4 +1,4 @@
-.login{
+.auth{
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -13,7 +13,7 @@
           align-items: center;
 }
 
-.login__box{
+.auth__box{
   background: var(--color-footer);
   padding: 3rem;
   margin: 1rem;
@@ -32,7 +32,7 @@
   box-shadow: 3px 3px 15px var(--color-bg);
 }
 
-.login__box-logo{
+.auth__box-logo{
   -ms-flex-item-align: center;
       align-self: center;
   display: -webkit-box;
@@ -50,7 +50,7 @@
           align-items: center;
 }
 
-.login__box-logo img{
+.auth__box-logo img{
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -58,13 +58,13 @@
   max-width: 300px;
 }
 
-.login__box-logo p{
+.auth__box-logo p{
   margin-top: 1rem;
   color: rgba(255,255,255,.7);
   text-align: center;
 }
 
-.login__box_form{
+.auth__box_form{
   margin-top: 2rem;
 display: -webkit-box;
 display: -ms-flexbox;
@@ -75,7 +75,7 @@ display: flex;
         flex-direction: column;
 }
 
-.login__box_form-field{
+.auth__box_form-field{
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -98,13 +98,13 @@ display: flex;
           align-items: flex-start;
 }
 
-.login__box_form-field label span{
+.auth__box_form-field label span{
   margin-bottom: .25rem;
   color: #FFF;
   font-size: 15px;
 }
 
-.login__box_form-field input{
+.auth__box_form-field input{
   width: 100%;
   padding: .5rem;
   border: none;
@@ -114,12 +114,12 @@ display: flex;
   color: var(--color-orange);
 }
 
-.login__box_form-field > span{
+.auth__box_form-field > span{
   color: indianred;
   margin-left: .5rem;
 }
 
-.login__box_form-field button{
+.auth__box_form-field button{
   -ms-flex-item-align: center;
       align-self: center;
 
@@ -138,11 +138,11 @@ display: flex;
   cursor: pointer;
 }
 
-.login__box_form-field button:disabled{
+.auth__box_form-field button:disabled{
   background-color: rgba(255, 193, 7, .2);
 }
 
-/* .login__box_form-field button:hover,
-.login__box_form-field button:focus{
+/* .auth__box_form-field button:hover,
+.auth__box_form-field button:focus{
   outline: 2px solid var(--color-bg);
 } */

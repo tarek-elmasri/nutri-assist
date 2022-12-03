@@ -17,7 +17,7 @@ import {
 } from '../../redux/features/userSlice';
 import Loader from '../../components/Loader/Loader';
 import logo from '../../assets/logo.png';
-import './signup.css';
+import './auth.css';
 
 const schema = yup.object({
   firstName: yup.string().required('Required Field'),
@@ -96,12 +96,12 @@ const Signup = () => {
 
   if (currentUser) return <Navigate to={returnUrl} />;
   return (
-    <div className="login bg__gradient">
+    <div className="auth bg__gradient">
       {isLoading && (
         <Loader fullScreen text="Please wait while creating your profile" />
       )}
-      <div className="login__box">
-        <div className="login__box-logo">
+      <div className="auth__box">
+        <div className="auth__box-logo">
           <img src={logo} alt="logo" />
           <p>Create account and start building your client profiles </p>
           {isServerError && (
@@ -110,44 +110,44 @@ const Signup = () => {
             </p>
           )}
         </div>
-        <div className="login__box_form">
+        <div className="auth__box_form">
           <form onSubmit={handleSubmit(submit)}>
-            <div className="login__box_form-field">
+            <div className="auth__box_form-field">
               <label htmlFor="firstName">
                 <span>First Name:</span>
               </label>
               <input {...register('firstName')} />
               <span>{errors.firstName?.message}</span>
             </div>
-            <div className="login__box_form-field">
+            <div className="auth__box_form-field">
               <label htmlFor="lastName">
                 <span>Last Name:</span>
               </label>
               <input {...register('lastName')} />
               <span>{errors.lastName?.message}</span>
             </div>
-            <div className="login__box_form-field">
+            <div className="auth__box_form-field">
               <label htmlFor="phoneNo">
                 <span>Phone No:</span>
               </label>
               <input type="number" {...register('phoneNo')} />
               <span>{errors.phoneNo?.message}</span>
             </div>
-            <div className="login__box_form-field">
+            <div className="auth__box_form-field">
               <label htmlFor="email">
                 <span>Email:</span>
               </label>
               <input {...register('email')} />
               <span>{errors.email?.message}</span>
             </div>
-            <div className="login__box_form-field">
+            <div className="auth__box_form-field">
               <label htmlFor="password">
                 <span>Password:</span>
               </label>
               <input type="password" {...register('password')} />
               <span>{errors.password?.message}</span>
             </div>
-            <div className="login__box_form-field">
+            <div className="auth__box_form-field">
               <button
                 className="hover-shadow"
                 type="submit"

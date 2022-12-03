@@ -13,7 +13,8 @@ import './App.css';
 import * as ls from 'local-storage';
 import { setToken, setUser, User } from './redux/features/userSlice';
 import Loader from './components/Loader/Loader';
-import Signup from './pages/signup/Signup';
+import Signup from './pages/auth/Signup';
+import Signin from './pages/auth/Signin';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const App = () => {
         <Route path="/profiles" element={<Profiles />} />
         <Route path="/profiles/new" element={<NewProfile />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   );
