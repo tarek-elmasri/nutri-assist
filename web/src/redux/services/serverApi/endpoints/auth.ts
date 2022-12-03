@@ -5,7 +5,10 @@ const authMutation = (builder: Builder) =>
     query: (credentials: { phoneNo: string; password: string }) => ({
       url: '/auth',
       method: 'POST',
-      body: { user: credentials }
+      body: {
+        phoneNo: `${credentials.phoneNo}`,
+        password: credentials.password
+      }
     })
   });
 
