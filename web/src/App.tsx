@@ -15,6 +15,7 @@ import { setToken, setUser, User } from './redux/features/userSlice';
 import Loader from './components/Loader/Loader';
 import Signup from './pages/auth/Signup';
 import Signin from './pages/auth/Signin';
+import DashboardLayout from './layouts/DashboardLayout';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -68,6 +69,8 @@ const App = () => {
         <Route path="/profiles/new" element={<NewProfile />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/dashboard/clients" element={<DashboardLayout />}></Route>
+        <Route path="/dashboard/profiles" element={<DashboardLayout />}></Route>
       </Routes>
     </BrowserRouter>
   );
