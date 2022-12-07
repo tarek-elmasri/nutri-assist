@@ -66,10 +66,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/profiles" element={<Profiles />} />
-        <Route path="/profiles/new" element={<NewProfile />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/dashboard/clients" element={<DashboardLayout />}></Route>
+        <Route path="/dashboard/clients" element={<DashboardLayout />}>
+          <Route path=":id/profiles/new" element={<NewProfile />} />
+        </Route>
         <Route path="/dashboard/profiles" element={<DashboardLayout />}></Route>
       </Routes>
     </BrowserRouter>

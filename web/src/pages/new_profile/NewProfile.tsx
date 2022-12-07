@@ -1,7 +1,6 @@
 import { useState, useEffect, PropsWithChildren } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Navbar } from '../../components';
 import { StepsBar } from '../../baseUI';
 import './new_profile.css';
 import {
@@ -157,9 +156,7 @@ const NewProfile = () => {
   );
 
   return (
-    <div className="new-profile bg__gradient">
-      <Navbar menu={<></>} />
-
+    <div className="new-profile">
       <div className="new-profile_heading">
         <h1>{frameTiltles.title}</h1>
         <p>{frameTiltles.subTitle}</p>
