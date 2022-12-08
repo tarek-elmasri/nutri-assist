@@ -1,0 +1,193 @@
+.clients{
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.clients__path{
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--color-bg);
+  background: var(--color-footer);
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clients__path span{
+  color: rgba(255, 255,255,.8);
+  font-size: medium;
+  margin-right: 1rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.clients__path button{
+  padding: .5rem 1rem;
+  border: none;
+  outline: none;
+  background: var(--color-orange);
+  color: var(--color-bg);
+  font-size: smaller;
+  font-weight: bold;
+  font-family: var(--font-family);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clients__searchbar{
+  margin-top: 2rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clients__searchbar-input{
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-right: 1rem;
+  max-width: 400px;
+}
+
+.clients__searchbar-options select{
+  padding: .5rem .5rem;
+  outline: none;
+  border: 1px solid var(--color-footer);
+  background: var(--color-bg);
+  color: var(--color-orange);
+  border-radius: 5px;
+}
+
+.clients__container{
+  margin-top: 2rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+
+/* ----- client cards starts ----- */
+
+.clients__container_client{
+  width: 350px;
+  background: var(--color-footer);
+  padding: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+          box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;  
+  border-radius: 5px;
+  -webkit-transition: all .25s ease-in-out;
+  -o-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+  cursor: pointer;
+}
+
+.clients__container_client:hover{
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.clients__container_client-header h3{
+  color: var(--color-orange);
+  font-size: 22px;
+  font-weight: bolder;
+  line-height: 40px;
+  font-family: var(--font-family);
+}
+
+.clients__container_client-header span{
+  color: var(--color-orange);
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 30px;
+  font-family: var(--font-family);
+}
+
+.clients__container_client-divider{
+  height: 1px;
+  width: 100%;
+  background: rgba(255,255,255,.5);
+}
+
+.clients__container_client-body{
+  margin-top: 1rem;
+}
+
+.clients__container_client-body span{
+  margin-top: .5rem;
+  display: block;
+  color: #fff;
+}
+
+/* ------ client cards ends ----- */
+
+@media screen and (max-width: 650px){
+  .clients__searchbar{
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+
+  .clients__searchbar-input{
+    width: 100%;
+    margin-top: .25rem;
+  }
+}

@@ -16,6 +16,7 @@ import Loader from './components/Loader/Loader';
 import Signup from './pages/auth/Signup';
 import Signin from './pages/auth/Signin';
 import DashboardLayout from './layouts/DashboardLayout';
+import Clients from './pages/clients/Clients';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard/clients" element={<DashboardLayout />}>
+          <Route index element={<Clients />} />
           <Route path=":id/profiles/new" element={<NewProfile />} />
         </Route>
         <Route path="/dashboard/profiles" element={<DashboardLayout />}></Route>
