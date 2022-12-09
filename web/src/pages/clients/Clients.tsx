@@ -58,36 +58,36 @@ const Clients = () => {
   return (
     <div className="clients">
       {isLoading && <Loader text="Loading clients data" />}
-      <div className="clients__path">
-        <span>Clients \ </span>
+
+      <div className="clients__searchbar bg__gradient-light">
+        <div className="clients__searchbar-block">
+          <div className="clients__searchbar-block_input">
+            <Searchbar
+              value={searchInput}
+              placeholder={
+                searchBy === 'Name'
+                  ? 'Search by client name'
+                  : 'Search by client phone no.'
+              }
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+          </div>
+          <div className="clients__searchbar-block_options">
+            <select
+              defaultValue={searchBy}
+              onChange={(e) => setSearchBy(e.target.value)}
+            >
+              <option value="Name">Name</option>
+              <option value="Phone">Phone No</option>
+            </select>
+          </div>
+        </div>
         <button
-          className="hover-shadow"
+          className="clients__searchbar-button hover-shadow"
           onClick={() => navigator('/dashboard/clients/new')}
         >
           New Client
         </button>
-      </div>
-      <div className="clients__searchbar">
-        <div className="clients__searchbar-input">
-          <Searchbar
-            value={searchInput}
-            placeholder={
-              searchBy === 'Name'
-                ? 'Search by client name'
-                : 'Search by client phone no.'
-            }
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </div>
-        <div className="clients__searchbar-options">
-          <select
-            defaultValue={searchBy}
-            onChange={(e) => setSearchBy(e.target.value)}
-          >
-            <option value="Name">Name</option>
-            <option value="Phone">Phone No</option>
-          </select>
-        </div>
       </div>
       <div className="clients__container">
         {isError && <>Something went wrong! please try again later</>}

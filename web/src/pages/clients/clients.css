@@ -15,16 +15,18 @@
           align-items: flex-start;
 }
 
-.clients__path{
-  width: 100%;
+.clients__searchbar{
   padding: 1rem;
-  border: 1px solid var(--color-bg);
-  background: var(--color-footer);
+  /* background: var(--color-footer); */
+  border-radius: 5px;
+  width: 100%;
   display: -webkit-box;
-
   display: -ms-flexbox;
-
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
@@ -33,18 +35,9 @@
           align-items: center;
 }
 
-.clients__path span{
-  color: rgba(255, 255,255,.8);
-  font-size: medium;
-  margin-right: 1rem;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-.clients__path button{
+.clients__searchbar-button{
   padding: .5rem 1rem;
-  border: none;
+  border: 1px solid var(--color-bg);
   outline: none;
   background: var(--color-orange);
   color: var(--color-bg);
@@ -55,21 +48,28 @@
   cursor: pointer;
 }
 
-.clients__searchbar{
-  margin-top: 2rem;
-  width: 100%;
+.clients__searchbar-block{
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
-.clients__searchbar-input{
+
+.clients__searchbar-block_input{
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -77,7 +77,11 @@
   max-width: 400px;
 }
 
-.clients__searchbar-options select{
+.clients__searchbar-block_options{
+  margin-right: 1rem;
+}
+
+.clients__searchbar-block_options select{
   padding: .5rem .5rem;
   outline: none;
   border: 1px solid var(--color-footer);
@@ -186,7 +190,24 @@
             align-items: flex-start;
   }
 
-  .clients__searchbar-input{
+  .clients__searchbar-button{
+    margin-bottom: .5rem;
+  }
+  .clients__searchbar-block{
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    width: 100%;
+  }
+
+  .clients__searchbar-block_input{
     width: 100%;
     margin-top: .25rem;
   }

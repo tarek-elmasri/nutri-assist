@@ -33,4 +33,18 @@ const getClientsQuery = (builder: Builder) =>
     query: () => '/clients'
   });
 
-export { getClientsQuery };
+const createClientMutation = (builder: Builder) =>
+  builder.mutation({
+    query: (
+      clientForm: Omit<
+        Client,
+        'id' | 'profiles' | 'createdAt' | 'updatedAt' | 'userId'
+      > & { password: string }
+    ) => ({
+      url: '/clients',
+      method: 'POST',
+      body: { client: clientForm }
+    })
+  });
+
+export { getClientsQuery, createClientMutation };
