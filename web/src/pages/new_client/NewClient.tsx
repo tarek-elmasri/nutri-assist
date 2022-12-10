@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,6 +7,7 @@ import { useCreateClientMutation } from '../../redux/services/serverApi';
 import Loader from '../../components/Loader/Loader';
 import './new_client.css';
 import { Client } from '../../redux/services/serverApi/endpoints/clients';
+import { notifyError } from '../../utils/notifications';
 
 const schema = yup.object({
   firstName: yup.string().required('Required Field'),
@@ -33,7 +33,6 @@ type CreateClientServerError = Partial<
 
 const NewClient = () => {
   const navigator = useNavigate();
-  const [isServerError, setIsServerError] = useState(false);
 
   // react-hook-form manages form states
   const {
@@ -50,14 +49,22 @@ const NewClient = () => {
   });
 
   // createClient redux mutation to server
-  const [submit, { data, isLoading, error: submitError }] =
-    useCreateClientMutation();
+  const [submit, { isLoading }] = useCreateClientMutation();
 
-  //handle server error responses
-  useEffect(() => {
-    if (submitError) {
-      if ((submitError as FetchBaseQueryError).status === 422) {
-        const errorData = (submitError as FetchBaseQueryError)
+  const onSubmit = async (
+    data: Omit<
+      Client,
+      'id' | 'profiles' | 'createdAt' | 'updatedAt' | 'userId'
+    > & {
+      password: string;
+    }
+  ) => {
+    try {
+      const res = await submit(data).unwrap();
+      navigator(`/dashboard/clients/${res.id}/profiles/new`);
+    } catch (error) {
+      if ((error as FetchBaseQueryError).status === 422) {
+        const errorData = (error as FetchBaseQueryError)
           .data as CreateClientServerError;
 
         (Object.keys(errorData) as (keyof CreateClientServerError)[]).forEach(
@@ -68,19 +75,10 @@ const NewClient = () => {
           }
         );
       } else {
-        setIsServerError(true);
-        console.log(submitError);
+        notifyError('Ops something went wrong! please try again later');
       }
     }
-  }, [submitError, setError]);
-
-  //  handle success sign up
-  useEffect(() => {
-    if (data) {
-      const { id } = data as Client;
-      navigator(`/dashboard/clients/${id}`);
-    }
-  }, [data, navigator]);
+  };
 
   return (
     <div className="new-client">
@@ -90,14 +88,9 @@ const NewClient = () => {
       <div className="new-client__box">
         <div className="new-client__box-logo">
           <p className="gradient__text">Add New Client</p>
-          {isServerError && (
-            <span style={{ color: 'indianred' }}>
-              Something Went Wrong! please try again later.
-            </span>
-          )}
         </div>
         <div className="new-client__box_form">
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="new-client__box_form-field">
               <label htmlFor="firstName">
                 <span>First Name:</span>

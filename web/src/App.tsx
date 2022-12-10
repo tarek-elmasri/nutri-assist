@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Main from './pages/main/Main';
 import NewProfile from './pages/new_profile';
 import Profiles from './pages/profiles';
@@ -18,6 +19,7 @@ import Signin from './pages/auth/Signin';
 import DashboardLayout from './layouts/DashboardLayout';
 import Clients from './pages/clients/Clients';
 import NewClient from './pages/new_client/NewClient';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -65,6 +67,12 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <ToastContainer
+        position="top-center"
+        autoClose={false}
+        closeOnClick={true}
+        theme="dark"
+      />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/profiles" element={<Profiles />} />
@@ -73,8 +81,8 @@ const App = () => {
         <Route path="/dashboard/clients" element={<DashboardLayout />}>
           <Route index element={<Clients />} />
           <Route path="new" element={<NewClient />} />
-          <Route path=":id" element={<Clients />} />
-          <Route path=":id/profiles/new" element={<NewProfile />} />
+          <Route path=":clientId" element={<Clients />} />
+          <Route path=":clientId/profiles/new" element={<NewProfile />} />
         </Route>
         <Route path="/dashboard/profiles" element={<DashboardLayout />}></Route>
       </Routes>

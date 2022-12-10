@@ -1,5 +1,5 @@
 import { Builder } from '.';
-import { ActivityLevel, Gender } from '../../../../modules/profile';
+import { IProfile } from './profiles';
 
 export type Client = {
   id: string;
@@ -9,24 +9,7 @@ export type Client = {
   createdAt: Date;
   updatedAt: Date;
   userId: string;
-  profiles: {
-    id: string;
-    weight: number;
-    height: number;
-    age: number;
-    gender: Gender;
-    activityLevel: ActivityLevel;
-    createdAt: Date;
-    updatedAt: Date;
-    serves: {
-      id: string;
-      count: number;
-      type: string;
-      createdAt: Date;
-      updatedAt: Date;
-      profileId: string;
-    }[];
-  }[];
+  profiles: IProfile[];
 };
 const getClientsQuery = (builder: Builder) =>
   builder.query<Client[], null>({
@@ -34,13 +17,13 @@ const getClientsQuery = (builder: Builder) =>
   });
 
 const createClientMutation = (builder: Builder) =>
-  builder.mutation({
-    query: (
-      clientForm: Omit<
-        Client,
-        'id' | 'profiles' | 'createdAt' | 'updatedAt' | 'userId'
-      > & { password: string }
-    ) => ({
+  builder.mutation<
+    Client,
+    Omit<Client, 'id' | 'profiles' | 'createdAt' | 'updatedAt' | 'userId'> & {
+      password: string;
+    }
+  >({
+    query: (clientForm) => ({
       url: '/clients',
       method: 'POST',
       body: { client: clientForm }

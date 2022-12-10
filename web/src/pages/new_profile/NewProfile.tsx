@@ -1,14 +1,7 @@
 import { useState, useEffect, PropsWithChildren } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StepsBar } from '../../baseUI';
 import './new_profile.css';
-import {
-  addProfile,
-  ProfileState,
-  updateProfile
-} from '../../redux/features/profileSlice';
-import { GlobalStoreState } from '../../redux/store';
 import {
   WeightBodyFrame,
   GenderFrame,
@@ -16,17 +9,31 @@ import {
   ActivityLevelFrame,
   SummaryFrame
 } from '.';
-import { Profile } from '../../modules/profile';
-import { useNavigate } from 'react-router';
+import { ActivityLevel, Gender } from '../../modules/profile';
+import { Navigate, useNavigate, useParams } from 'react-router';
+import { IProfile } from '../../redux/services/serverApi/endpoints/profiles';
+import { useCreateProfileMutation } from '../../redux/services/serverApi';
+import Loader from '../../components/Loader/Loader';
+import { notifyError } from '../../utils/notifications';
+
+type ProfileForm = Omit<
+  IProfile,
+  'id' | 'createdAt' | 'updatedAt' | 'serves' | 'clientId'
+>;
 
 const NewProfile = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { data: profileData } = useSelector<GlobalStoreState, ProfileState>(
-    (state) => state.profile
-  );
+  const navigator = useNavigate();
+  const { clientId } = useParams();
+  const initialForm = {
+    height: 178,
+    weight: 82,
+    age: 0,
+    gender: Gender.male,
+    activityLevel: ActivityLevel.low
+  };
+  const [profileData, setProfileData] = useState<ProfileForm>(initialForm);
 
-  const { activityLevel, gender, age, weight, height } = profileData;
+  const { weight, height } = profileData;
   const [currentStep, setCurrentStep] = useState(1);
   const [frame, setFrame] = useState<JSX.Element>();
   const [frameTiltles, setFrameTitles] = useState({
@@ -34,20 +41,34 @@ const NewProfile = () => {
     subTitle: 'hola'
   });
 
-  const onNext = (newState: Partial<Profile>) => {
-    dispatch(updateProfile(newState));
+  const [submit, { isLoading }] = useCreateProfileMutation();
 
-    if (currentStep === 5) {
-      console.log({ height, weight, age, activityLevel, gender });
-      dispatch(addProfile(profileData));
-      navigate('/profiles');
-    } else {
-      setCurrentStep((prev) => prev + 1);
-    }
+  const onNext = (newState: Partial<ProfileForm>) => {
+    setProfileData((prev) => ({ ...prev, ...newState }));
+
+    setCurrentStep((prev) => prev + 1);
   };
 
   const onPrev = () => {
     setCurrentStep((prev) => (prev === 1 ? 1 : prev - 1));
+  };
+
+  const onSubmit = async () => {
+    try {
+      const res = await submit({
+        profile: profileData,
+        clientId: clientId!
+      }).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      if ((error as { status: number }).status === 404) {
+        notifyError('Invalid client id');
+        navigator('/dashboard/clients');
+      } else {
+        notifyError('Ops something went wrong, please try again later');
+      }
+    }
   };
 
   useEffect(() => {
@@ -102,11 +123,7 @@ const NewProfile = () => {
         break;
       case 5:
         setFrame(
-          <SummaryFrame
-            onNext={() => onNext({})}
-            onPrev={onPrev}
-            form={profileData}
-          />
+          <SummaryFrame onNext={onSubmit} onPrev={onPrev} form={profileData} />
         );
         setFrameTitles({
           title: 'Strive For Progress, Not For Perfection',
@@ -155,6 +172,9 @@ const NewProfile = () => {
     </motion.div>
   );
 
+  if (!clientId) return <Navigate to="/dashboard/clients" />;
+  if (isLoading)
+    return <Loader fullScreen text="Creating profile, please wait" />;
   return (
     <div className="new-profile">
       <div className="new-profile_heading">
