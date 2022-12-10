@@ -7,8 +7,7 @@ describe('BalancedDiet Module tests', () => {
     weight: 113,
     gender: Gender.male,
     age: 33,
-    activityLevel: ActivityLevel.low,
-    serves: []
+    activityLevel: ActivityLevel.low
   };
 
   const kidProfile: Profile = {
@@ -16,8 +15,7 @@ describe('BalancedDiet Module tests', () => {
     weight: 45,
     gender: Gender.female,
     age: 9,
-    activityLevel: ActivityLevel.average,
-    serves: []
+    activityLevel: ActivityLevel.average
   };
 
   test('getCalorieFacor method return valid calculations', () => {

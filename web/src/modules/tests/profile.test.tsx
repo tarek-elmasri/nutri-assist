@@ -9,8 +9,7 @@ fdescribe('profile module tests', () => {
       weight: 82,
       gender: Gender.male,
       age: 36,
-      activityLevel: ActivityLevel.low,
-      serves: []
+      activityLevel: ActivityLevel.low
     };
   });
   test('getIdealBodyWeight method defined and returns valid calculations', () => {
