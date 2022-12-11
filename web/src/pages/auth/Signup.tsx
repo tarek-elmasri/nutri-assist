@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -18,6 +17,7 @@ import {
 import Loader from '../../components/Loader/Loader';
 import logo from '../../assets/logo.png';
 import './auth.css';
+import { notifyError } from '../../utils/notifications';
 
 const schema = yup.object({
   firstName: yup.string().required('Required Field'),
@@ -43,7 +43,6 @@ const Signup = () => {
   const { user: currentUser } = useSelector<GlobalStoreState, UserState>(
     (state) => state.user
   );
-  const [isServerError, setIsServerError] = useState(false);
 
   // react-hook-form manages form states
   const {
@@ -56,14 +55,19 @@ const Signup = () => {
   });
 
   // sign up redux mutation to server
-  const [submit, { data, isLoading, error: submitError }] =
-    useCreateUserMutation();
+  const [submit, { isLoading }] = useCreateUserMutation();
 
-  // handle server error responses
-  useEffect(() => {
-    if (submitError) {
-      if ((submitError as FetchBaseQueryError).status === 422) {
-        const errorData = (submitError as FetchBaseQueryError)
+  // handle submit
+  const onSubmit = async (form: Omit<User, 'id'> & { password: string }) => {
+    try {
+      const { user, tokens } = await submit(form).unwrap();
+      ls.set('refreshToken', tokens.refreshToken);
+      dispatch(setToken(tokens.accessToken));
+      dispatch(setUser(user));
+      navigator(returnUrl);
+    } catch (error) {
+      if ((error as FetchBaseQueryError).status === 422) {
+        const errorData = (error as FetchBaseQueryError)
           .data as CreateUserServerError;
 
         (Object.keys(errorData) as (keyof CreateUserServerError)[]).forEach(
@@ -74,25 +78,10 @@ const Signup = () => {
           }
         );
       } else {
-        setIsServerError(true);
-        console.log(submitError);
+        notifyError('Ops something went wrong, please try again later');
       }
     }
-  }, [submitError, setError]);
-
-  // handle success sign up
-  useEffect(() => {
-    if (data) {
-      const { user, tokens } = data as {
-        user: User;
-        tokens: { accessToken: string; refreshToken: string };
-      };
-      ls.set('refreshToken', tokens.refreshToken);
-      dispatch(setToken(tokens.accessToken));
-      dispatch(setUser(user));
-      navigator(returnUrl);
-    }
-  }, [data, dispatch]);
+  };
 
   if (currentUser) return <Navigate to={returnUrl} />;
   return (
@@ -104,14 +93,9 @@ const Signup = () => {
         <div className="auth__box-logo">
           <img src={logo} alt="logo" />
           <p>Create account and start building your client profiles </p>
-          {isServerError && (
-            <p style={{ color: 'indianred' }}>
-              Something Went Wrong! please try again later.
-            </p>
-          )}
         </div>
         <div className="auth__box_form">
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="auth__box_form-field">
               <label htmlFor="firstName">
                 <span>First Name:</span>

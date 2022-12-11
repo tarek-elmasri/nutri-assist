@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -9,12 +9,7 @@ import { Navigate, useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { GlobalStoreState } from '../../redux/store';
 import { useAuthenticateMutation } from '../../redux/services/serverApi';
-import {
-  setToken,
-  setUser,
-  User,
-  UserState
-} from '../../redux/features/userSlice';
+import { setToken, setUser, UserState } from '../../redux/features/userSlice';
 import Loader from '../../components/Loader/Loader';
 import logo from '../../assets/logo.png';
 import './auth.css';
@@ -48,34 +43,24 @@ const Signin = () => {
   });
 
   // sign up redux mutation to server
-  const [submit, { data, isLoading, error: submitError }] =
-    useAuthenticateMutation();
+  const [submit, { isLoading }] = useAuthenticateMutation();
 
-  // handle server error responses
-  useEffect(() => {
-    if (submitError) {
-      if ((submitError as FetchBaseQueryError).status === 404) {
-        setServerError('Invalid phone no. or password');
-      } else {
-        setServerError('Something went wrong! please try again later');
-        console.log(submitError);
-      }
-    }
-  }, [submitError, setServerError]);
-
-  // handle success sign in
-  useEffect(() => {
-    if (data) {
-      const { user, tokens } = data as {
-        user: User;
-        tokens: { accessToken: string; refreshToken: string };
-      };
+  const onSubmit = async (form: { phoneNo: string; password: string }) => {
+    try {
+      const { user, tokens } = await submit(form).unwrap();
       ls.set('refreshToken', tokens.refreshToken);
       dispatch(setToken(tokens.accessToken));
       dispatch(setUser(user));
       navigator(returnUrl);
+    } catch (error) {
+      if ((error as FetchBaseQueryError).status === 404) {
+        setServerError('Invalid phone no. or password');
+      } else {
+        setServerError('Something went wrong! please try again later');
+        console.log(error);
+      }
     }
-  }, [data, dispatch]);
+  };
 
   if (currentUser) return <Navigate to={returnUrl} />;
   return (
@@ -88,7 +73,7 @@ const Signin = () => {
           {serverError && <p style={{ color: 'indianred' }}>{serverError}</p>}
         </div>
         <div className="auth__box_form">
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="auth__box_form-field">
               <label htmlFor="phoneNo">
                 <span>Phone No:</span>

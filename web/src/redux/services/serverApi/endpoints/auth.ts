@@ -1,25 +1,29 @@
 import { Builder } from '.';
+import { User } from '../../../features/userSlice';
 
 const authMutation = (builder: Builder) =>
-  builder.mutation({
-    query: (credentials: { phoneNo: string; password: string }) => ({
+  builder.mutation<
+    { user: User; tokens: { accessToken: string; refreshToken: string } },
+    { phoneNo: string; password: string }
+  >({
+    query: ({ phoneNo, password }) => ({
       url: '/auth',
       method: 'POST',
       body: {
-        phoneNo: `${credentials.phoneNo}`,
-        password: credentials.password
+        phoneNo: `${phoneNo}`,
+        password
       }
     })
   });
 
 const fetchUserQuery = (builder: Builder) =>
-  builder.query({
+  builder.query<User, null>({
     query: () => '/auth'
   });
 
 const getAccessTokenQuery = (builder: Builder) =>
-  builder.mutation({
-    query: (refreshToken) => ({
+  builder.mutation<{ accessToken: string }, { refreshToken: string }>({
+    query: ({ refreshToken }) => ({
       url: '/auth',
       method: 'PATCH',
       body: { refreshToken }
