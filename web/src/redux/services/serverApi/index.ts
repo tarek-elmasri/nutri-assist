@@ -5,6 +5,8 @@ import {
   fetchUserQuery,
   getAccessTokenQuery
 } from './endpoints/auth';
+import { createClientMutation, getClientsQuery } from './endpoints/clients';
+import { createProfileMutation } from './endpoints/profiles';
 import { createUserMutation } from './endpoints/users';
 
 const serverApi = createApi({
@@ -19,10 +21,18 @@ const serverApi = createApi({
     }
   }),
   endpoints: (builder) => ({
+    // sessions routes
     authenticate: authMutation(builder),
-    fetchUser: fetchUserQuery(builder),
     getAccessToken: getAccessTokenQuery(builder),
-    createUser: createUserMutation(builder)
+    // users routes
+    fetchUser: fetchUserQuery(builder),
+    createUser: createUserMutation(builder),
+    // clients routes
+    getClients: getClientsQuery(builder),
+    createClient: createClientMutation(builder),
+
+    // create profile
+    createProfile: createProfileMutation(builder)
   })
 });
 
@@ -30,7 +40,10 @@ export const {
   useAuthenticateMutation,
   useFetchUserQuery,
   useGetAccessTokenMutation,
-  useCreateUserMutation
+  useCreateUserMutation,
+  useGetClientsQuery,
+  useCreateClientMutation,
+  useCreateProfileMutation
 } = serverApi;
 
 export default serverApi;

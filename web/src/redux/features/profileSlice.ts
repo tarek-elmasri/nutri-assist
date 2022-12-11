@@ -12,8 +12,7 @@ const initialState: ProfileState = {
     weight: 82,
     age: 0,
     gender: Gender.male,
-    activityLevel: ActivityLevel.low,
-    serves: []
+    activityLevel: ActivityLevel.low
   }
 };
 
