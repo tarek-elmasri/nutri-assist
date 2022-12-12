@@ -15,8 +15,19 @@ class Serve extends Model<
   InferCreationAttributes<Serve>
 > {
   declare id: CreationOptional<string>;
-  declare count: CreationOptional<number>;
-  declare type: string;
+  declare starch: CreationOptional<number>;
+  declare vegetable: CreationOptional<number>;
+  declare fruit: CreationOptional<number>;
+  declare leanMeat: CreationOptional<number>;
+  declare mediumMeat: CreationOptional<number>;
+  declare highMeat: CreationOptional<number>;
+  declare lowFatMilk: CreationOptional<number>;
+  declare mediumFatMilk: CreationOptional<number>;
+  declare highFatMilk: CreationOptional<number>;
+  declare legume: CreationOptional<number>;
+  declare sugar: CreationOptional<number>;
+  declare pufa: CreationOptional<number>;
+  declare mufa: CreationOptional<number>;
   declare profileId: ForeignKey<Profile['id']>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -32,14 +43,70 @@ Serve.init(
       allowNull: false,
       primaryKey: true
     },
-    count: {
+    starch: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 1
+      defaultValue: 0
     },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false
+    vegetable: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    fruit: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    leanMeat: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    mediumMeat: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    highMeat: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    lowFatMilk: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    mediumFatMilk: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    highFatMilk: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    legume: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    sugar: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    pufa: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    mufa: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     },
     createdAt: {
       type: DataTypes.DATE,
