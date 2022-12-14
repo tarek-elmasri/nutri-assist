@@ -1,105 +1,90 @@
-export interface IServe {
+export interface ServeType {
   CHO: number;
   protien: number;
   fat: number;
   calories: number;
 }
 
-const fruitServe: IServe = {
+export const fruitServe: ServeType = {
   CHO: 15,
   protien: 0,
   fat: 0,
   calories: 60
 };
 
-const legumeServe: IServe = {
+export const legumeServe: ServeType = {
   CHO: 15,
   protien: 7,
   fat: 0,
   calories: 110
 };
 
-const leanMeatServe: IServe = {
+export const leanMeatServe: ServeType = {
   CHO: 0,
   protien: 7,
   fat: 3,
   calories: 45
 };
 
-const mediumMeatServe: IServe = {
+export const mediumMeatServe: ServeType = {
   CHO: 0,
   protien: 7,
   fat: 5,
   calories: 75
 };
 
-const highMeatServe: IServe = {
+export const highMeatServe: ServeType = {
   CHO: 0,
   protien: 7,
   fat: 8,
   calories: 100
 };
 
-const freeFatMilkServe: IServe = {
+export const freeFatMilkServe: ServeType = {
   CHO: 15,
   protien: 8,
   fat: 3,
   calories: 100
 };
 
-const mediumFatMilkServe: IServe = {
+export const mediumFatMilkServe: ServeType = {
   CHO: 15,
   protien: 8,
   fat: 5,
   calories: 120
 };
 
-const highFatMilkServe: IServe = {
+export const highFatMilkServe: ServeType = {
   CHO: 15,
   protien: 8,
   fat: 8,
   calories: 150
 };
 
-const starchServe: IServe = {
+export const starchServe: ServeType = {
   CHO: 15,
   protien: 3,
   fat: 0,
   calories: 80
 };
 
-const vegetableServe: IServe = {
+export const vegetableServe: ServeType = {
   CHO: 5,
   protien: 2,
   fat: 0,
   calories: 25
 };
 
-const sugarServe: IServe = {
+export const sugarServe: ServeType = {
   CHO: 15,
   protien: 0,
   fat: 0,
   calories: 60
 };
 
-const oilServe: IServe = {
+export const oilServe: ServeType = {
   CHO: 0,
   protien: 0,
   fat: 5,
   calories: 45
-};
-
-export default {
-  fruitServe,
-  vegetableServe,
-  leanMeatServe,
-  mediumMeatServe,
-  highMeatServe,
-  freeFatMilkServe,
-  mediumFatMilkServe,
-  highFatMilkServe,
-  starchServe,
-  legumeServe,
-  sugarServe,
-  oilServe
 };
