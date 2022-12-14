@@ -59,7 +59,7 @@ const NewProfile = () => {
         profile: profileData,
         clientId: clientId!
       }).unwrap();
-      console.log(res);
+      navigator(`/dashboard/clients/${clientId}/profiles/${res.id}/serves/new`);
     } catch (error) {
       console.log(error);
       if ((error as { status: number }).status === 404) {

@@ -6,7 +6,8 @@ import {
   getAccessTokenQuery
 } from './endpoints/auth';
 import { createClientMutation, getClientsQuery } from './endpoints/clients';
-import { createProfileMutation } from './endpoints/profiles';
+import { createProfileMutation, getProfileQuery } from './endpoints/profiles';
+import { createServePlanMutation } from './endpoints/serves';
 import { createUserMutation } from './endpoints/users';
 
 const serverApi = createApi({
@@ -32,7 +33,11 @@ const serverApi = createApi({
     createClient: createClientMutation(builder),
 
     // create profile
-    createProfile: createProfileMutation(builder)
+    createProfile: createProfileMutation(builder),
+    getProfile: getProfileQuery(builder),
+
+    // serves routes
+    createServePlan: createServePlanMutation(builder)
   })
 });
 
@@ -43,7 +48,9 @@ export const {
   useCreateUserMutation,
   useGetClientsQuery,
   useCreateClientMutation,
-  useCreateProfileMutation
+  useCreateProfileMutation,
+  useGetProfileQuery,
+  useCreateServePlanMutation
 } = serverApi;
 
 export default serverApi;

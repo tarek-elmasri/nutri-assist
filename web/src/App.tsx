@@ -19,6 +19,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 import Clients from './pages/clients/Clients';
 import NewClient from './pages/new_client/NewClient';
 import 'react-toastify/dist/ReactToastify.css';
+import NewServePlan from './pages/new_serve_plan/NewServePlan';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,10 @@ const App = () => {
           <Route path="new" element={<NewClient />} />
           <Route path=":clientId" element={<Clients />} />
           <Route path=":clientId/profiles/new" element={<NewProfile />} />
+          <Route
+            path=":clientId/profiles/:profileId/serves/new"
+            element={<NewServePlan />}
+          />
         </Route>
         <Route path="/dashboard/profiles" element={<DashboardLayout />}></Route>
       </Routes>

@@ -41,6 +41,11 @@ router.get(
   [requireUser, clientExists],
   profilesController.index
 );
+router.get(
+  '/clients/:clientId/profiles/:profileId',
+  [requireUser, clientExists],
+  profilesController.show
+);
 router.post(
   '/clients/:clientId/profiles',
   [requireUser, clientExists],
@@ -51,7 +56,7 @@ router.patch(
   [requireUser, clientExists, profileExists],
   profilesController.update
 );
-router.get(
+router.delete(
   '/clients/:clientId/profiles/:profileId',
   [requireUser, clientExists, profileExists],
   profilesController.destroy
@@ -72,7 +77,7 @@ router.patch(
   '/clients/:clientId/profiles/:profileId/serves/:serveId',
   servesController.update
 );
-router.get(
+router.delete(
   '/clients/:clientId/profiles/:profileId/serves/:serveId',
   servesController.destroy
 );
