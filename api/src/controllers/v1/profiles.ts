@@ -19,6 +19,24 @@ const index = async (req: Request, res: Response) => {
   }
 };
 
+const show = async (req: Request, res: Response) => {
+  try {
+    const clientId = req.params.clientId;
+    const profileId = req.params.profileId;
+
+    const profile = await Profile.findOne({
+      where: { id: profileId, clientId }
+    });
+    if (profile) {
+      res.json(profile);
+    } else {
+      res.status(404).json({ msg: 'not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
 const create = async (req: Request, res: Response) => {
   try {
     const clientId = req.params.clientId;
@@ -37,6 +55,7 @@ const destroy = () => {};
 
 export default {
   index,
+  show,
   create,
   update,
   destroy
