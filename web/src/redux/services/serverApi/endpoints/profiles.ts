@@ -23,3 +23,9 @@ export const createProfileMutation = (builder: Builder) =>
       body: { profile }
     })
   });
+
+export const getProfileQuery = (builder: Builder) =>
+  builder.query<IProfile, { clientId: string; profileId: string }>({
+    query: ({ clientId, profileId }) =>
+      `/clients/${clientId}/profiles/${profileId}`
+  });
