@@ -7,6 +7,7 @@
   --color-orange: rgba(255, 193, 7, 1);
   --color-footer: rgba(75, 37, 137, 1); 
   --color-text: rgba(129, 175, 221, 1);
+  --color-offwhite: rgb(203, 200, 200);
 }
 
 input::-webkit-outer-spin-button,

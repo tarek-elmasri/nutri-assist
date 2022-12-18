@@ -16,6 +16,11 @@ const getClientsQuery = (builder: Builder) =>
     query: () => '/clients'
   });
 
+const getClientByIdQuery = (builder: Builder) =>
+  builder.query<Client, { clientId: string }>({
+    query: ({ clientId }) => `/clients/${clientId}`
+  });
+
 const createClientMutation = (builder: Builder) =>
   builder.mutation<
     Client,
@@ -30,4 +35,4 @@ const createClientMutation = (builder: Builder) =>
     })
   });
 
-export { getClientsQuery, createClientMutation };
+export { getClientsQuery, getClientByIdQuery, createClientMutation };

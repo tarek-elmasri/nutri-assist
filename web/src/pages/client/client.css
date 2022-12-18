@@ -1,0 +1,124 @@
+.client{
+  padding: 1rem;
+}
+
+.client__info-header{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.client__info-header h3{
+  font-family: var(--font-family);
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--color-orange);
+}
+
+.client__info-header svg{
+  cursor: pointer;
+  color: #FFF;
+}
+
+.client__info-header svg:hover{
+  color: red;
+}
+
+.client__info-data{
+  margin-top: 1rem;
+  border-left: 3px solid var(--color-orange);
+  padding: .5rem;
+}
+
+.client__info-data p{
+  font-family: var(--font-family);
+  color: var(--color-offwhite);
+  font-size: medium;
+  padding: .5rem;
+}
+
+
+.client__profiles{
+  margin-top: 2rem;
+}
+
+.client__profiles-header{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.client__profiles-header h3{
+  font-family: var(--font-family);
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--color-orange);
+}
+
+.client__profiles-header button{
+  padding: .5rem 1rem;
+  border: 1px solid var(--color-bg);
+  outline: none;
+  background: var(--color-orange);
+  color: var(--color-bg);
+  font-size: smaller;
+  font-weight: bold;
+  font-family: var(--font-family);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.client__profiles-accordion{
+  margin-top: 1rem;
+}
+
+.client__profiles-accordion_container-data{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.client__profiles-accordion_container-data p{
+  font-family: var(--font-family);
+  color: var(--color-offwhite);
+  font-size: 15px;
+  margin-bottom: 1rem;
+}
+
+.client__profiles-accordion_container-data_inputs{
+  min-width: 50%;
+}
+
+.client__profiles-accordion_container button{
+  margin-top: 1rem;
+  padding: .5rem 1rem;
+  border: 1px solid var(--color-bg);
+  outline: none;
+  background: var(--color-orange);
+  color: var(--color-bg);
+  font-size: smaller;
+  font-weight: bold;
+  font-family: var(--font-family);
+  border-radius: 5px;
+  cursor: pointer;
+}
