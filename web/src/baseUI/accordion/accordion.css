@@ -1,0 +1,42 @@
+
+.accordion{
+  width: 100%;
+  border-left: 3px solid var(--color-orange);
+}
+
+.accordion__control{
+  padding: 1rem;
+  background: var(--color-footer);
+  cursor: pointer;
+}
+
+.accordion__control:after{
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #fff;
+  float: right;
+  margin-left: 5px;
+}
+
+.accordion__control.active:after{
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+.accordion__control span{
+  font-family: var(--font-family);
+  font-size: medium;
+  font-weight: bold;
+  color: #FFF;
+
+}
+.accordion__panel{
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height .2s ease-out;
+  -o-transition: max-height .2s ease-out;
+  transition: max-height .2s ease-out;
+}
+
+.accordion__panel-content{
+  padding: 1rem;
+}
