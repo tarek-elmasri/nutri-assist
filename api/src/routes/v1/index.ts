@@ -82,4 +82,6 @@ router.delete(
   servesController.destroy
 );
 
+// router for profiles directly
+router.get('/profiles', [requireUser], profilesController.getAllProfiles);
 export default router;
