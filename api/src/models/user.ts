@@ -15,11 +15,14 @@ import {
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
   Association,
-  NonAttribute
+  NonAttribute,
+  FindOptions
 } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { sequelize } from '../database/database';
 import Client from './client';
+import Profile from './profile';
+import Serve from './serve';
 
 // interface
 class User extends Model<
@@ -53,6 +56,22 @@ class User extends Model<
 
   declare static associations: {
     clients: Association<User, Client>;
+  };
+
+  getAllProfiles = async () => {
+    const mappedClients = (await this.getClients()).map((client) => client.id);
+    return Profile.findAll({
+      where: {
+        clientId: mappedClients
+      },
+      include: [
+        {
+          model: Serve,
+          as: 'serves'
+        },
+        { model: Client, as: 'client' }
+      ]
+    });
   };
 }
 

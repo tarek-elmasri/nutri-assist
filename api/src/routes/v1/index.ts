@@ -23,6 +23,7 @@ router.post('/users', usersController.create);
 
 // user clients
 router.get('/clients', [requireUser], clientsController.index);
+router.get('/clients/:clientId', [requireUser], clientsController.show);
 router.post('/clients', [requireUser], clientsController.create);
 router.patch(
   '/clients/:clientId',
@@ -82,4 +83,6 @@ router.delete(
   servesController.destroy
 );
 
+// router for profiles directly
+router.get('/profiles', [requireUser], profilesController.getAllProfiles);
 export default router;

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Searchbar from '../../baseUI/Searchbar/Searchbar';
 import Loader from '../../components/Loader/Loader';
@@ -6,9 +6,12 @@ import { useGetClientsQuery } from '../../redux/services/serverApi';
 import { Client } from '../../redux/services/serverApi/endpoints/clients';
 import './clients.css';
 
-const ClientCard: React.FC<{ client: Client }> = ({ client }) => (
+const ClientCard: React.FC<{
+  client: Client;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+}> = ({ client, onClick }) => (
   <>
-    <div className="clients__container_client">
+    <div className="clients__container_client" onClick={onClick}>
       <div className="clients__container_client-header">
         <h3>
           {client.firstName} {client.lastName ? client.lastName : ''}
@@ -94,10 +97,18 @@ const Clients = () => {
         {clients?.length === 0 && <>No available clients</>}
         {searchBy === 'Name'
           ? filterClientsByName(searchInput)?.map((client) => (
-              <ClientCard key={client.id} client={client} />
+              <ClientCard
+                key={client.id}
+                client={client}
+                onClick={() => navigator(`/dashboard/clients/${client.id}`)}
+              />
             ))
           : filterClientsByPhone(searchInput)?.map((client) => (
-              <ClientCard key={client.id} client={client} />
+              <ClientCard
+                key={client.id}
+                client={client}
+                onClick={() => navigator(`/dashboard/clients/${client.id}`)}
+              />
             ))}
       </div>
     </div>

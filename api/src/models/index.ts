@@ -12,7 +12,11 @@ Client.hasMany(Profile, {
   as: 'profiles'
 });
 
-Profile.belongsTo(Client, { targetKey: 'id', foreignKey: 'clientId' });
+Profile.belongsTo(Client, {
+  targetKey: 'id',
+  foreignKey: 'clientId',
+  as: 'client'
+});
 Profile.hasMany(Serve, {
   sourceKey: 'id',
   foreignKey: 'profileId',

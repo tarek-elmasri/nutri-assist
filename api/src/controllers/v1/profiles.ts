@@ -53,10 +53,21 @@ const update = () => {};
 
 const destroy = () => {};
 
+const getAllProfiles = async (req: Request, res: Response) => {
+  try {
+    const profiles = await req.user!.getAllProfiles();
+    res.json(profiles);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error });
+  }
+};
+
 export default {
   index,
   show,
   create,
   update,
-  destroy
+  destroy,
+  getAllProfiles
 };
