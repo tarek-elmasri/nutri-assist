@@ -4,11 +4,14 @@ import {
   profilesController,
   servesController,
   sessionsController,
-  usersController
+  usersController,
+  serveMealsController,
+  mealsController
 } from '../../controllers/v1';
 import clientExists from '../../middlewares/v1/clientExists';
 import profileExists from '../../middlewares/v1/profileExists';
 import requireUser from '../../middlewares/v1/requireUser';
+import serveExists from '../../middlewares/v1/serveExists';
 
 const router = express.Router();
 
@@ -82,6 +85,17 @@ router.delete(
   '/clients/:clientId/profiles/:profileId/serves/:serveId',
   servesController.destroy
 );
+
+//clients -> profiles -> serves -> serveMeal
+router.post(
+  '/clients/:clientId/profiles/:profileId/serves/:serveId/serveMeals',
+  [requireUser, clientExists, profileExists, serveExists],
+  serveMealsController.create
+);
+
+// meals routes
+router.get('/meals', requireUser, mealsController.index);
+router.post('/meals', requireUser, mealsController.create);
 
 // router for profiles directly
 router.get('/profiles', [requireUser], profilesController.getAllProfiles);

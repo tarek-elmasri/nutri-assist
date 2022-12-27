@@ -1,11 +1,24 @@
 import { Request, Response } from 'express';
-import { Serve } from '../../models';
+import { Serve, ServeMeal } from '../../models';
+import Meal from '../../models/meal';
 
 const index = async (req: Request, res: Response) => {
   try {
     const profileId = req.params.profileId;
 
-    const serves = await Serve.findAll({ where: { profileId } });
+    const serves = await Serve.findAll({
+      where: { profileId },
+      include: {
+        model: ServeMeal,
+        as: 'serveMeals',
+        include: [
+          {
+            model: Meal,
+            as: 'meal'
+          }
+        ]
+      }
+    });
 
     res.json(serves);
   } catch (error) {

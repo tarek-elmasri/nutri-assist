@@ -2,6 +2,8 @@ import User from './user';
 import Client from './client';
 import Profile from './profile';
 import Serve from './serve';
+import ServeMeal from './serveMeal';
+import Meal from './meal';
 
 User.hasMany(Client, { foreignKey: 'userId', sourceKey: 'id', as: 'clients' });
 
@@ -23,6 +25,23 @@ Profile.hasMany(Serve, {
   as: 'serves'
 });
 
-Serve.belongsTo(Profile, { targetKey: 'id', foreignKey: 'profileId' });
+ServeMeal.belongsTo(Serve, {
+  targetKey: 'id',
+  foreignKey: 'serveId',
+  as: 'serveMeal'
+});
 
-export { User, Client, Profile, Serve };
+ServeMeal.belongsTo(Meal, {
+  targetKey: 'id',
+  foreignKey: 'mealId',
+  as: 'meal'
+});
+
+Serve.belongsTo(Profile, { targetKey: 'id', foreignKey: 'profileId' });
+Serve.hasMany(ServeMeal, {
+  sourceKey: 'id',
+  foreignKey: 'serveId',
+  as: 'serveMeals'
+});
+
+export { User, Client, Profile, Serve, ServeMeal };

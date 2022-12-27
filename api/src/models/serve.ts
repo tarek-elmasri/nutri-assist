@@ -5,14 +5,26 @@ import {
   CreationOptional,
   DataTypes,
   ForeignKey,
-  NonAttribute
+  NonAttribute,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association
 } from 'sequelize';
 import { sequelize } from '../database/database';
 import Profile from './profile';
+import ServeMeal from './serveMeal';
 
 class Serve extends Model<
-  InferAttributes<Serve>,
-  InferCreationAttributes<Serve>
+  InferAttributes<Serve, { omit: 'serveMeals' }>,
+  InferCreationAttributes<Serve, { omit: 'serveMeals' }>
 > {
   declare id: CreationOptional<string>;
   declare starch: CreationOptional<number>;
@@ -33,6 +45,23 @@ class Serve extends Model<
   declare updatedAt: CreationOptional<Date>;
 
   declare profile?: NonAttribute<Profile>;
+
+  declare getServeMeals: HasManyGetAssociationsMixin<ServeMeal>; // Note the null assertions!
+  declare addServeMeal: HasManyAddAssociationMixin<ServeMeal, string>;
+  declare addServeMeals: HasManyAddAssociationsMixin<ServeMeal, string>;
+  declare setServeMeal: HasManySetAssociationsMixin<ServeMeal, string>;
+  declare removeServeMeal: HasManyRemoveAssociationMixin<ServeMeal, string>;
+  declare removeServeMeals: HasManyRemoveAssociationsMixin<ServeMeal, string>;
+  declare hasServeMeal: HasManyHasAssociationMixin<ServeMeal, string>;
+  declare hasServeMeals: HasManyHasAssociationsMixin<ServeMeal, string>;
+  declare countServeMeal: HasManyCountAssociationsMixin;
+  declare createServeMeal: HasManyCreateAssociationMixin<ServeMeal, 'serveId'>;
+
+  declare serveMeals?: NonAttribute<ServeMeal[]>;
+
+  declare static associations: {
+    serveMeals: Association<Serve, ServeMeal>;
+  };
 }
 
 Serve.init(
