@@ -72,6 +72,11 @@ router.get(
   [requireUser, clientExists, profileExists],
   servesController.index
 );
+router.get(
+  '/clients/:clientId/profiles/:profileId/serves/serveId',
+  [requireUser, clientExists, profileExists],
+  servesController.show
+);
 router.post(
   '/clients/:clientId/profiles/:profileId/serves',
   [requireUser, clientExists, profileExists],

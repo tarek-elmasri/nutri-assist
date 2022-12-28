@@ -26,6 +26,22 @@ const index = async (req: Request, res: Response) => {
   }
 };
 
+const show = async (req: Request, res: Response) => {
+  try {
+    const profileId = req.params.profileId;
+    const serveId = req.params.serveId;
+
+    const serve = await Serve.findOne({ where: { id: serveId, profileId } });
+    if (serve) {
+      res.json(serve);
+    } else {
+      res.status(404).json({ msg: 'not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
 const create = async (req: Request, res: Response) => {
   try {
     const profileId = req.params.profileId;
@@ -44,6 +60,7 @@ const destroy = async () => {};
 
 export default {
   index,
+  show,
   create,
   update,
   destroy
