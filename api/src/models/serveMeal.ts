@@ -19,6 +19,7 @@ class ServeMeal extends Model<
   declare id: CreationOptional<string>;
   declare serveId: ForeignKey<Serve['id']>;
   declare mealId: ForeignKey<Meal['id']>;
+  declare name: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -33,6 +34,10 @@ ServeMeal.init(
       allowNull: false,
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
